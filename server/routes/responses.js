@@ -20,7 +20,7 @@ const transporter = createTransport({
 // Submit form response (public - no authentication needed)
 router.post('/', async (req, res) => {
   try {
-    const { formId, responses, submitterInfo, completionTime } = req.body;
+    const { formId, responses, submitterInfo, completionTime, userId } = req.body;
     
     // Verify form exists and is published
     const form = await Form.findById(formId);
@@ -36,7 +36,11 @@ router.post('/', async (req, res) => {
     const response = new Response({
       formId,
       responses,
-      submitterInfo,
+      submitterInfo: {
+        ...submitterInfo,
+        userId: userId || submitterInfo?.userId,
+        savedToAccount: !!userId
+      },
       completionTime,
       submittedAt: new Date()
     });
@@ -183,6 +187,35 @@ router.delete('/:id', authenticateToken, async (req, res) => {
 
     res.json({ message: 'Response deleted successfully' });
   } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Get user's own responses (forms they've submitted to)
+router.get('/my-responses', authenticateToken, async (req, res) => {
+  try {
+    console.log('My responses route - Getting responses for user:', req.user._id);
+    
+    const responses = await Response.find({ 
+      'submitterInfo.userId': req.user._id,
+      'submitterInfo.savedToAccount': true
+    })
+    .populate('formId', 'title description')
+    .sort({ submittedAt: -1 });
+
+    const formattedResponses = responses.map(response => ({
+      _id: response._id,
+      formId: response.formId._id,
+      formTitle: response.formId.title,
+      responses: response.responses,
+      submittedAt: response.submittedAt,
+      completionTime: response.completionTime
+    }));
+
+    console.log('My responses route - Found', formattedResponses.length, 'responses');
+    res.json(formattedResponses);
+  } catch (error) {
+    console.error('My responses route - Error:', error);
     res.status(500).json({ error: error.message });
   }
 });

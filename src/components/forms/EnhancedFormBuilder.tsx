@@ -25,7 +25,8 @@ import {
   BarChart3,
   GitBranch,
   Menu,
-  X
+  X,
+  AlertCircle
 } from 'lucide-react';
 import { formAPI } from '../../services/api';
 import toast from 'react-hot-toast';
@@ -93,6 +94,15 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
   const [activeTab, setActiveTab] = useState<'fields' | 'logic' | 'design' | 'settings'>('fields');
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [mobileFieldEditorOpen, setMobileFieldEditorOpen] = useState(false);
+  const [formSettings, setFormSettings] = useState({
+    allowMultipleResponses: true,
+    requireLogin: false,
+    showProgressBar: true,
+    customTheme: {
+      primaryColor: '#3B82F6',
+      backgroundColor: '#FFFFFF'
+    }
+  });
 
   const fieldTypes = [
     { type: 'text', label: 'Text Input', icon: Type },
@@ -114,6 +124,11 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
     }
   }, [formId]);
 
+  useEffect(() => {
+    if (form.settings) {
+      setFormSettings(form.settings);
+    }
+  }, [form]);
   const loadForm = async () => {
     try {
       const response = await formAPI.getForm(formId!);
@@ -179,11 +194,16 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
 
     setSaving(true);
     try {
+      const formDataToSave = {
+        ...form,
+        settings: formSettings
+      };
+      
       if (form._id) {
-        await formAPI.updateForm(form._id, form);
+        await formAPI.updateForm(form._id, formDataToSave);
         toast.success('Form saved successfully');
       } else {
-        const response = await formAPI.createForm(form);
+        const response = await formAPI.createForm(formDataToSave);
         setForm(response.data);
         toast.success('Form created successfully');
       }
@@ -904,31 +924,114 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                       <input
                         type="checkbox"
                         id="allowMultiple"
+                        checked={formSettings.allowMultipleResponses}
+                        onChange={(e) => setFormSettings(prev => ({ 
+                          ...prev, 
+                          allowMultipleResponses: e.target.checked 
+                        }))}
                         className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                       />
                       <label htmlFor="allowMultiple" className="text-sm font-medium text-gray-700">
                         Allow multiple responses from same user
                       </label>
                     </div>
+                    
                     <div className="flex items-center space-x-2">
                       <input
                         type="checkbox"
                         id="requireLogin"
+                        checked={formSettings.requireLogin}
+                        onChange={(e) => setFormSettings(prev => ({ 
+                          ...prev, 
+                          requireLogin: e.target.checked 
+                        }))}
                         className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                       />
                       <label htmlFor="requireLogin" className="text-sm font-medium text-gray-700">
                         Require login to submit
                       </label>
                     </div>
+                    
                     <div className="flex items-center space-x-2">
                       <input
                         type="checkbox"
                         id="showProgress"
+                        checked={formSettings.showProgressBar}
+                        onChange={(e) => setFormSettings(prev => ({ 
+                          ...prev, 
+                          showProgressBar: e.target.checked 
+                        }))}
                         className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                       />
                       <label htmlFor="showProgress" className="text-sm font-medium text-gray-700">
                         Show progress bar
                       </label>
+                    </div>
+                    
+                    {formSettings.requireLogin && (
+                      <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                        <div className="flex items-center space-x-2 text-blue-800">
+                          <AlertCircle className="w-5 h-5" />
+                          <span className="font-medium">Login Required</span>
+                        </div>
+                        <p className="text-sm text-blue-700 mt-1">
+                          Users must be signed in to submit responses to this form.
+                        </p>
+                      </div>
+                    )}
+                    
+                    <div className="border-t border-gray-200 pt-4">
+                      <h4 className="text-md font-medium text-gray-900 mb-3">Notification Settings</h4>
+                      <div className="space-y-3">
+                        <div className="flex items-center space-x-2">
+                          <input
+                            type="checkbox"
+                            id="emailNotifications"
+                            className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                          />
+                          <label htmlFor="emailNotifications" className="text-sm font-medium text-gray-700">
+                            Email notifications for new responses
+                          </label>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                          <input
+                            type="checkbox"
+                            id="responseLimit"
+                            className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                          />
+                          <label htmlFor="responseLimit" className="text-sm font-medium text-gray-700">
+                            Limit number of responses
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="border-t border-gray-200 pt-4">
+                      <h4 className="text-md font-medium text-gray-900 mb-3">Form Behavior</h4>
+                      <div className="space-y-3">
+                        <div className="flex items-center space-x-2">
+                          <input
+                            type="checkbox"
+                            id="shuffleQuestions"
+                            className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                          />
+                          <label htmlFor="shuffleQuestions" className="text-sm font-medium text-gray-700">
+                            Randomize question order
+                          </label>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                          <input
+                            type="checkbox"
+                            id="confirmationPage"
+                            className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                          />
+                          <label htmlFor="confirmationPage" className="text-sm font-medium text-gray-700">
+                            Show confirmation page after submission
+                          </label>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

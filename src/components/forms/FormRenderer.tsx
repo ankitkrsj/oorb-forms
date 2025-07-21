@@ -5,6 +5,7 @@ import { formAPI, responseAPI } from '../../services/api';
 import FormHeader from './FormHeader';
 import ResponseSavePrompt from './ResponseSavePrompt';
 import toast from 'react-hot-toast';
+import FileUploadField from './FileUploadField';
 
 interface FormField {
   id: string;
@@ -44,6 +45,7 @@ const FormRenderer: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [startTime] = useState(Date.now());
   const [user, setUser] = useState<any>(null);
+  const [showLoginRequired, setShowLoginRequired] = useState(false);
 
   useEffect(() => {
     // Check if user is logged in
@@ -62,6 +64,14 @@ const FormRenderer: React.FC = () => {
     }
   }, [shareUrl]);
 
+  useEffect(() => {
+    // Check if login is required when form loads
+    if (form && form.settings?.requireLogin && !user) {
+      setShowLoginRequired(true);
+    } else {
+      setShowLoginRequired(false);
+    }
+  }, [form, user]);
   const loadForm = async () => {
     try {
       const response = await formAPI.getFormByShareUrl(shareUrl!);
@@ -144,7 +154,7 @@ const FormRenderer: React.FC = () => {
 
     // Check if login is required
     if (form.settings?.requireLogin && !user) {
-      toast.error('Please sign in to submit this form');
+      setShowLoginRequired(true);
       return;
     }
 
@@ -177,10 +187,11 @@ const FormRenderer: React.FC = () => {
         formId: form._id,
         responses: formattedResponses,
         completionTime,
+        userId: saveToAccount && userData ? userData._id : null,
         submitterInfo: {
           userAgent: navigator.userAgent,
           timestamp: new Date().toISOString(),
-          userId: saveToAccount && userData ? userData.id : null,
+          userId: saveToAccount && userData ? userData._id : null,
           savedToAccount: saveToAccount
         }
       });
@@ -343,23 +354,12 @@ const FormRenderer: React.FC = () => {
       case 'file':
         return (
           <div>
-            <div className={`border-2 border-dashed rounded-md p-4 text-center transition-colors ${
-              errors[field.id] ? 'border-red-300 bg-red-50' : 'border-gray-300 hover:border-gray-400'
-            }`}>
-              <Upload className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400 mx-auto mb-2" />
-              <input
-                type="file"
-                onChange={(e) => handleInputChange(field.id, e.target.files?.[0]?.name || '')}
-                className="hidden"
-                id={field.id}
-              />
-              <label htmlFor={field.id} className="cursor-pointer text-blue-600 hover:text-blue-700 text-sm sm:text-base">
-                Click to upload or drag and drop
-              </label>
-              {responses[field.id] && (
-                <p className="text-sm text-gray-600 mt-2">Selected: {responses[field.id]}</p>
-              )}
-            </div>
+            <FileUploadField
+              value={responses[field.id] || ''}
+              onChange={(value) => handleInputChange(field.id, value)}
+              accept="*/*"
+              maxSize={10}
+            />
             {errors[field.id] && (
               <div className="flex items-center space-x-1 mt-1 text-red-600 text-sm">
                 <AlertCircle className="w-4 h-4" />
@@ -443,12 +443,22 @@ const FormRenderer: React.FC = () => {
         <div className="max-w-md mx-auto text-center">
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 sm:p-8">
             <CheckCircle className="w-12 h-12 sm:w-16 sm:h-16 text-green-500 mx-auto mb-4" />
-            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Thank You!</h1>
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
+              Thank You{user ? `, ${user.name}` : ''}!
+            </h1>
             <p className="text-gray-600 mb-4">Your response has been submitted successfully.</p>
             {user && (
-              <p className="text-sm text-blue-600">
-                Your response has been saved to your account.
-              </p>
+              <div className="space-y-3">
+                <p className="text-sm text-blue-600">
+                  Your response has been saved to your account.
+                </p>
+                <button
+                  onClick={() => window.open('/oorb-forms', '_blank')}
+                  className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm"
+                >
+                  View Your Form History
+                </button>
+              </div>
             )}
           </div>
         </div>
@@ -460,7 +470,70 @@ const FormRenderer: React.FC = () => {
     <div className="min-h-screen bg-gray-50">
       <FormHeader form={form} />
       
+      {/* Login Required Modal */}
+      {showLoginRequired && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
+            <div className="p-6 border-b border-gray-200">
+              <h3 className="text-lg font-semibold text-gray-900">Login Required</h3>
+            </div>
+            <div className="p-6">
+              <p className="text-gray-600 mb-4">
+                This form requires you to be logged in to submit a response.
+              </p>
+              <div className="flex space-x-3">
+                <button
+                  onClick={() => window.location.href = '/login'}
+                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                >
+                  Sign In
+                </button>
+                <button
+                  onClick={() => window.location.href = '/register'}
+                  className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors"
+                >
+                  Sign Up
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      
       <div className="max-w-2xl mx-auto px-4 py-6 sm:py-8">
+        {/* User Status Indicator */}
+        <div className="mb-4">
+          <div className="bg-white rounded-lg border border-gray-200 p-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                {user ? (
+                  <>
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <span className="text-sm text-gray-600">
+                      Filling as: <span className="font-medium text-gray-900">{user.email}</span>
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
+                    <span className="text-sm text-gray-600">
+                      Filling as: <span className="font-medium text-gray-900">Anonymous</span>
+                    </span>
+                  </>
+                )}
+              </div>
+              {!user && (
+                <button
+                  onClick={() => window.location.href = '/login'}
+                  className="text-xs text-blue-600 hover:text-blue-700"
+                >
+                  Sign in
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+        
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 sm:p-8">
           {/* Progress Bar */}
           {form.settings?.showProgressBar && form.fields.length > 5 && (
@@ -479,7 +552,7 @@ const FormRenderer: React.FC = () => {
           )}
 
           {/* Login Requirement Notice */}
-          {form.settings?.requireLogin && !user && (
+          {form.settings?.requireLogin && !user && !showLoginRequired && (
             <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
               <div className="flex items-center space-x-2 text-yellow-800">
                 <AlertCircle className="w-5 h-5" />
@@ -488,6 +561,20 @@ const FormRenderer: React.FC = () => {
               <p className="text-sm text-yellow-700 mt-1">
                 You must be signed in to submit this form.
               </p>
+              <div className="mt-3 flex space-x-2">
+                <button
+                  onClick={() => window.location.href = '/login'}
+                  className="px-3 py-1 bg-yellow-600 text-white rounded text-sm hover:bg-yellow-700"
+                >
+                  Sign In
+                </button>
+                <button
+                  onClick={() => window.location.href = '/register'}
+                  className="px-3 py-1 border border-yellow-600 text-yellow-800 rounded text-sm hover:bg-yellow-100"
+                >
+                  Sign Up
+                </button>
+              </div>
             </div>
           )}
           
