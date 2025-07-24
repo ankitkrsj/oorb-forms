@@ -1,24 +1,34 @@
 import React from 'react';
-import { FileText, Folder, MoreVertical } from 'lucide-react';
+import { BarChart3, Copy, Edit, ExternalLink, FileText, Folder, FolderOpen, MoreVertical, Trash2 } from 'lucide-react';
 import { FormItem, FolderItem } from './types';
-import { useFormData } from './FormDataContext';
+import { useDashboard } from './DashboardContext';
 
 interface ListViewProps {
+  filteredFolders: FolderItem[];
+  filteredStandaloneForms: FormItem[];
   onEditForm: (id: string) => void;
   onViewResponses: (id: string) => void;
   onDeleteForm: (id: string) => void;
   onCopyShareLink: (shareUrl: string) => void;
   onDeleteFolder: (id: string) => void;
+
+  setOpenFolderModal: (folder: FolderItem | null) => void;
+  setSelectedFolder: (folder: FolderItem | null) => void;
+  setShowFolderModal: (show: boolean) => void;
 }
 
-const ListView: React.FC<ListViewProps> = ({ 
-  onEditForm, 
+const ListView: React.FC<ListViewProps> = ({
+  filteredFolders,
+  filteredStandaloneForms,
+  onEditForm,
   onViewResponses,
   onDeleteForm,
   onCopyShareLink,
-  onDeleteFolder
+  onDeleteFolder,
+  setOpenFolderModal,
+  setSelectedFolder,
+  setShowFolderModal,
 }) => {
-  const { filteredFolders, filteredStandaloneForms } = useFormData();
   const { activeDropdown, setActiveDropdown } = useDashboard();
 
   const getStatusDotColor = (status: string) => {
@@ -32,19 +42,17 @@ const ListView: React.FC<ListViewProps> = ({
 
   return (
     <div className="bg-white rounded-sm border border-gray-200 overflow-hidden">
+      {/* Header */}
       <div className="hidden sm:grid sm:grid-cols-4 gap-4 p-4 border-b border-gray-200 bg-gray-50 text-sm font-medium text-gray-700">
-        <div className="flex items-center justify-between">
-          <span>Name</span>
-        </div>
+        <div className="flex items-center justify-between"><span>Name</span></div>
         <div>Type</div>
         <div>Status</div>
-        <div className="flex items-center justify-between">
-          <span>Modified</span>
-          <span>Actions</span>
-        </div>
+        <div className="flex items-center justify-between"><span>Modified</span><span>Actions</span></div>
       </div>
+
+      {/* Folder List */}
       <div className="divide-y divide-gray-200">
-        {filteredFolders.map((folder) => (
+        {filteredFolders.map((folder: FolderItem) => (
           <div 
             key={folder._id} 
             className="grid grid-cols-1 sm:grid-cols-4 gap-2 sm:gap-4 p-4 hover:bg-gray-50 cursor-pointer relative"
@@ -70,6 +78,7 @@ const ListView: React.FC<ListViewProps> = ({
                 >
                   <MoreVertical className="w-4 h-4 text-gray-500" />
                 </button>
+
                 {activeDropdown === folder._id && (
                   <div className="absolute right-0 top-8 w-48 bg-white rounded-sm shadow-lg border border-gray-200 py-2 z-50">
                     <button
@@ -83,6 +92,7 @@ const ListView: React.FC<ListViewProps> = ({
                       <FolderOpen className="w-4 h-4" />
                       <span>Open Folder</span>
                     </button>
+
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -95,7 +105,9 @@ const ListView: React.FC<ListViewProps> = ({
                       <Edit className="w-4 h-4" />
                       <span>Edit Folder</span>
                     </button>
+
                     <div className="border-t border-gray-100 my-1"></div>
+
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -113,8 +125,9 @@ const ListView: React.FC<ListViewProps> = ({
             </div>
           </div>
         ))}
-        
-        {filteredStandaloneForms.map((form) => (
+
+        {/* Forms List */}
+        {filteredStandaloneForms.map((form: FormItem) => (
           <div 
             key={form._id} 
             className="grid grid-cols-1 sm:grid-cols-4 gap-2 sm:gap-4 p-4 hover:bg-gray-50 cursor-pointer relative"

@@ -1,9 +1,10 @@
 import React from 'react';
 import FileItem from './FileItem';
 import { FormItem, FolderItem } from './types';
-import { useFormData } from './FormDataContext';
 
 interface GridViewProps {
+  filteredFolders: FolderItem[];
+  filteredStandaloneForms: FormItem[];
   onEditForm: (id: string) => void;
   onViewResponses: (id: string) => void;
   onDeleteForm: (id: string) => void;
@@ -11,18 +12,18 @@ interface GridViewProps {
   onDeleteFolder: (id: string) => void;
 }
 
-const GridView: React.FC<GridViewProps> = ({ 
-  onEditForm, 
+const GridView: React.FC<GridViewProps> = ({
+  filteredFolders,
+  filteredStandaloneForms,
+  onEditForm,
   onViewResponses,
   onDeleteForm,
   onCopyShareLink,
   onDeleteFolder
 }) => {
-  const { filteredFolders, filteredStandaloneForms } = useFormData();
-
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 sm:gap-4">
-      {filteredFolders.map((folder) => (
+      {filteredFolders.map((folder: FolderItem) => (
         <FileItem
           key={`folder-${folder._id}`}
           item={folder}
@@ -31,7 +32,7 @@ const GridView: React.FC<GridViewProps> = ({
         />
       ))}
 
-      {filteredStandaloneForms.map((form) => (
+      {filteredStandaloneForms.map((form: FormItem) => (
         <FileItem
           key={`form-${form._id}`}
           item={form}

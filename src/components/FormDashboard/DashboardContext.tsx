@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { DashboardContextType } from './types';
+import { DashboardContextType, FolderItem } from './types';
 
 const DashboardContext = createContext<DashboardContextType | undefined>(undefined);
 

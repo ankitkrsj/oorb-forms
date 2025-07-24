@@ -52,7 +52,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
           password: formData.password
         });
       } else {
-        response = await authAPI.signup({
+        response = await authAPI.register({ // ✅ fixed here
           name: formData.name,
           email: formData.email,
           password: formData.password

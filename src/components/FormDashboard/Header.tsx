@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Search } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import ProfileDropdown from './ProfileDropdown';
+import { useDashboard } from './DashboardContext';
 
 const Header: React.FC = () => {
   const { user, getInitials } = useAuth();
