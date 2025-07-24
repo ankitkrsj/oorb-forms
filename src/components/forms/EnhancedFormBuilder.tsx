@@ -56,6 +56,15 @@ interface Form {
   status: 'draft' | 'published' | 'closed';
   shareUrl?: string;
   conditionalRules?: any[];
+  settings?: {
+    allowMultipleResponses?: boolean;
+    requireLogin?: boolean;
+    showProgressBar?: boolean;
+    customTheme?: {
+      primaryColor: string;
+      backgroundColor: string;
+    };
+  };
   theme?: {
     primaryColor: string;
     backgroundColor: string;

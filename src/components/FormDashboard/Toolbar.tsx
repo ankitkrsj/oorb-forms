@@ -1,5 +1,5 @@
 import React from 'react';
-import { FolderPlus, Plus, Grid3X3, List } from 'lucide-react';
+import { FolderPlus, Plus, Grid3x3, List } from 'lucide-react';
 import { useDashboard } from './DashboardContext';
 
 const Toolbar: React.FC<{ onCreateForm: () => void }> = ({ onCreateForm }) => {
@@ -51,7 +51,7 @@ const Toolbar: React.FC<{ onCreateForm: () => void }> = ({ onCreateForm }) => {
               onClick={() => setViewMode('grid')}
               className={`p-2 ${viewMode === 'grid' ? 'bg-blue-100 text-blue-600' : 'text-gray-600 hover:bg-gray-100'}`}
             >
-              <Grid3X3 className="w-4 h-4" />
+              <Grid3x3 className="w-4 h-4" />
             </button>
             <button
               onClick={() => setViewMode('list')}

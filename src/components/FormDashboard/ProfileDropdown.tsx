@@ -4,6 +4,15 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useFormData } from './FormDataContext';
 import { useState } from 'react';
 
+interface FormItem {
+  _id: string;
+  title: string;
+  description: string;
+  responses?: number;
+  views?: number;
+  status: 'published' | 'draft' | 'closed';
+}
+
 interface ProfileDropdownProps {
   onClose: () => void;
 }
@@ -19,9 +28,9 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ onClose }) => {
   });
   const [saving, setSaving] = useState(false);
 
-  const totalResponses = forms.reduce((sum, form) => sum + (form.responses || 0), 0);
-  const totalViews = forms.reduce((sum, form) => sum + (form.views || 0), 0);
-  const activeForms = forms.filter(form => form.status === 'published').length;
+  const totalResponses = forms.reduce((sum: number, form: FormItem) => sum + (form.responses || 0), 0);
+  const totalViews = forms.reduce((sum: number, form: FormItem) => sum + (form.views || 0), 0);
+  const activeForms = forms.filter((form: FormItem) => form.status === 'published').length;
 
   const handleProfileUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
