@@ -31,7 +31,7 @@ const ListView: React.FC<ListViewProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+    <div className="bg-white rounded-sm border border-gray-200 overflow-hidden">
       <div className="hidden sm:grid sm:grid-cols-4 gap-4 p-4 border-b border-gray-200 bg-gray-50 text-sm font-medium text-gray-700">
         <div className="flex items-center justify-between">
           <span>Name</span>
@@ -71,7 +71,7 @@ const ListView: React.FC<ListViewProps> = ({
                   <MoreVertical className="w-4 h-4 text-gray-500" />
                 </button>
                 {activeDropdown === folder._id && (
-                  <div className="absolute right-0 top-8 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+                  <div className="absolute right-0 top-8 w-48 bg-white rounded-sm shadow-lg border border-gray-200 py-2 z-50">
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -153,7 +153,7 @@ const ListView: React.FC<ListViewProps> = ({
                   <MoreVertical className="w-4 h-4 text-gray-500" />
                 </button>
                 {activeDropdown === form._id && (
-                  <div className="absolute right-0 top-8 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+                  <div className="absolute right-0 top-8 w-48 bg-white rounded-sm shadow-lg border border-gray-200 py-2 z-50">
                     <button
                       onClick={(e) => {
                         e.stopPropagation();

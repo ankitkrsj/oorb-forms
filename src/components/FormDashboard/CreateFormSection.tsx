@@ -17,10 +17,10 @@ const CreateFormSection: React.FC<CreateFormSectionProps> = ({ onCreateForm }) =
           {/* Blank Form */}
           <div 
             onClick={onCreateForm}
-            className="bg-blue-200 rounded-lg border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-all cursor-pointer group"
+            className="bg-blue-200 rounded-sm border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-all cursor-pointer group"
           >
             <div className="flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4">
-              <div className="w-16 h-20 sm:w-20 sm:h-24 rounded-lg border-gray-200 flex items-center justify-center group-hover:border-blue-500 transition-colors relative">
+              <div className="w-16 h-20 sm:w-20 sm:h-24 rounded-sm border-gray-200 flex items-center justify-center group-hover:border-blue-500 transition-colors relative">
                 <img src={form3d} alt="form" className="object-contain" />
               </div>
               <div className="flex-1">
@@ -33,9 +33,9 @@ const CreateFormSection: React.FC<CreateFormSectionProps> = ({ onCreateForm }) =
           </div>
 
           {/* Create by AI */}
-          <div className="bg-violet-200 rounded-lg border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-all cursor-pointer group">
+          <div className="bg-violet-200 rounded-sm border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-all cursor-pointer group">
             <div className="flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4">
-              <div className="w-16 h-20 sm:w-20 sm:h-24 bg-purple-50 rounded-lg flex items-center justify-center group-hover:border-purple-500 transition-colors relative">
+              <div className="w-16 h-20 sm:w-20 sm:h-24 bg-purple-50 rounded-sm flex items-center justify-center group-hover:border-purple-500 transition-colors relative">
                 <img src={ai3d} alt="AI form" />
               </div>
               <div className="flex-1">
@@ -48,9 +48,9 @@ const CreateFormSection: React.FC<CreateFormSectionProps> = ({ onCreateForm }) =
           </div>
 
           {/* Use Template */}
-          <div className="bg-green-200 rounded-lg border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-all cursor-pointer group sm:col-span-2 lg:col-span-1">
+          <div className="bg-green-200 rounded-sm border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-all cursor-pointer group sm:col-span-2 lg:col-span-1">
             <div className="flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4">
-              <div className="w-16 h-20 sm:w-20 sm:h-24 rounded-lg flex items-center justify-center group-hover:border-green-500 transition-colors relative">
+              <div className="w-16 h-20 sm:w-20 sm:h-24 rounded-sm flex items-center justify-center group-hover:border-green-500 transition-colors relative">
                 <img src={temp3d} alt="template" className="object-contain" />
               </div>
               <div className="flex-1">

@@ -386,7 +386,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
               type="text"
               value={field.label}
               onChange={(e) => updateField(field.id, { label: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
           
@@ -399,7 +399,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                 type="text"
                 value={field.placeholder || ''}
                 onChange={(e) => updateField(field.id, { placeholder: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
           )}
@@ -420,14 +420,14 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                         newOptions[index] = e.target.value;
                         updateField(field.id, { options: newOptions });
                       }}
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                     <button
                       onClick={() => {
                         const newOptions = field.options?.filter((_, i) => i !== index);
                         updateField(field.id, { options: newOptions });
                       }}
-                      className="p-2 text-red-600 hover:bg-red-50 rounded-lg"
+                      className="p-2 text-red-600 hover:bg-red-50 rounded-sm"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -438,7 +438,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                     const newOptions = [...(field.options || []), `Option ${(field.options?.length || 0) + 1}`];
                     updateField(field.id, { options: newOptions });
                   }}
-                  className="w-full px-3 py-2 border border-dashed border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50"
+                  className="w-full px-3 py-2 border border-dashed border-gray-300 rounded-sm text-gray-600 hover:bg-gray-50"
                 >
                   + Add Option
                 </button>
@@ -466,7 +466,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
           
           <button
             onClick={() => deleteField(field.id)}
-            className="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors shadow-lg"
+            className="w-full px-4 py-2 bg-red-600 text-white rounded-sm hover:bg-red-700 transition-colors shadow-lg"
           >
             Delete Field
           </button>
@@ -565,7 +565,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
             <h1 className="text-xl font-semibold">Form Preview</h1>
             <button
               onClick={() => setPreviewMode(false)}
-              className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 shadow-lg transition-all"
+              className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-sm hover:from-blue-700 hover:to-purple-700 shadow-lg transition-all"
             >
               Back to Editor
             </button>
@@ -592,7 +592,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
               
               <button
                 type="submit"
-                className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:from-blue-700 hover:to-purple-700 shadow-lg transition-all"
+                className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-sm hover:from-blue-700 hover:to-purple-700 shadow-lg transition-all"
               >
                 Submit
               </button>
@@ -653,7 +653,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                 setShowAIBuilder(true);
                 setMobileSidebarOpen(false);
               }}
-              className="w-full flex items-center space-x-2 px-3 py-2 text-left hover:bg-purple-50 rounded-lg transition-colors text-purple-700 border border-purple-200"
+              className="w-full flex items-center space-x-2 px-3 py-2 text-left hover:bg-purple-50 rounded-sm transition-colors text-purple-700 border border-purple-200"
             >
               <Sparkles className="w-4 h-4" />
               <span className="text-sm">AI Form Builder</span>
@@ -663,7 +663,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                 setShowTemplates(true);
                 setMobileSidebarOpen(false);
               }}
-              className="w-full flex items-center space-x-2 px-3 py-2 text-left hover:bg-blue-50 rounded-lg transition-colors text-blue-700 border border-blue-200"
+              className="w-full flex items-center space-x-2 px-3 py-2 text-left hover:bg-blue-50 rounded-sm transition-colors text-blue-700 border border-blue-200"
             >
               <FileText className="w-4 h-4" />
               <span className="text-sm">Use Template</span>
@@ -682,7 +682,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                   addField(fieldType.type as FormField['type']);
                   setMobileSidebarOpen(false);
                 }}
-                className="w-full flex items-center space-x-3 px-3 py-2 text-left hover:bg-blue-50 rounded-lg transition-colors border border-transparent hover:border-blue-200"
+                className="w-full flex items-center space-x-3 px-3 py-2 text-left hover:bg-blue-50 rounded-sm transition-colors border border-transparent hover:border-blue-200"
               >
                 <Icon className="w-5 h-5 text-gray-600" />
                 <span className="text-sm">{fieldType.label}</span>
@@ -702,7 +702,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                 type="text"
                 value={form.title}
                 onChange={(e) => setForm(prev => ({ ...prev, title: e.target.value }))}
-                className="text-lg md:text-xl font-bold bg-transparent border-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg px-2 py-1 w-full max-w-xs"
+                className="text-lg md:text-xl font-bold bg-transparent border-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-sm px-2 py-1 w-full max-w-xs"
               />
               <span className={`px-2 py-1 text-xs font-medium rounded-full ${
                 form.status === 'published' ? 'bg-green-100 text-green-800' :
@@ -715,7 +715,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
             <div className="flex items-center space-x-1 md:space-x-2">
               <button
                 onClick={() => setPreviewMode(true)}
-                className="flex items-center space-x-1 md:space-x-2 p-2 md:px-4 md:py-2 text-gray-600 hover:bg-gray-50 rounded-lg border border-gray-300"
+                className="flex items-center space-x-1 md:space-x-2 p-2 md:px-4 md:py-2 text-gray-600 hover:bg-gray-50 rounded-sm border border-gray-300"
                 title="Preview"
               >
                 <Eye className="w-4 h-4" />
@@ -724,7 +724,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
               <button 
                 onClick={saveForm}
                 disabled={saving}
-                className="flex items-center space-x-1 md:space-x-2 p-2 md:px-4 md:py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 shadow-lg"
+                className="flex items-center space-x-1 md:space-x-2 p-2 md:px-4 md:py-2 bg-blue-600 text-white rounded-sm hover:bg-blue-700 disabled:opacity-50 shadow-lg"
                 title="Save"
               >
                 <Save className="w-4 h-4" />
@@ -733,7 +733,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
               <button 
                 onClick={publishForm}
                 disabled={publishing || !form._id}
-                className="flex items-center space-x-1 md:space-x-2 p-2 md:px-4 md:py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 shadow-lg"
+                className="flex items-center space-x-1 md:space-x-2 p-2 md:px-4 md:py-2 bg-green-600 text-white rounded-sm hover:bg-green-700 disabled:opacity-50 shadow-lg"
                 title="Publish"
               >
                 <Send className="w-4 h-4" />
@@ -743,28 +743,28 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                 <>
                   <button
                     onClick={copyShareLink}
-                    className="hidden md:flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 shadow-lg"
+                    className="hidden md:flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-sm hover:bg-purple-700 shadow-lg"
                   >
                     <Share2 className="w-4 h-4" />
                     <span>Share</span>
                   </button>
                   <button
                     onClick={() => setShowEmbedCode(true)}
-                    className="hidden md:flex items-center space-x-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 shadow-lg"
+                    className="hidden md:flex items-center space-x-2 px-4 py-2 bg-gray-600 text-white rounded-sm hover:bg-gray-700 shadow-lg"
                   >
                     <Code className="w-4 h-4" />
                     <span>Embed</span>
                   </button>
                   <button
                     onClick={() => setShowIntegrations(true)}
-                    className="hidden md:flex items-center space-x-2 px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 shadow-lg"
+                    className="hidden md:flex items-center space-x-2 px-4 py-2 bg-orange-600 text-white rounded-sm hover:bg-orange-700 shadow-lg"
                   >
                     <Zap className="w-4 h-4" />
                     <span>Integrations</span>
                   </button>
                   <button
                     onClick={() => setShowAnalytics(true)}
-                    className="hidden md:flex items-center space-x-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 shadow-lg"
+                    className="hidden md:flex items-center space-x-2 px-4 py-2 bg-indigo-600 text-white rounded-sm hover:bg-indigo-700 shadow-lg"
                   >
                     <BarChart3 className="w-4 h-4" />
                     <span>Analytics</span>
@@ -814,13 +814,13 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                       type="text"
                       value={form.title}
                       onChange={(e) => setForm(prev => ({ ...prev, title: e.target.value }))}
-                      className="text-xl md:text-2xl font-bold text-gray-900 bg-transparent border-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg px-2 py-1 w-full"
+                      className="text-xl md:text-2xl font-bold text-gray-900 bg-transparent border-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-sm px-2 py-1 w-full"
                       placeholder="Form Title"
                     />
                     <textarea
                       value={form.description}
                       onChange={(e) => setForm(prev => ({ ...prev, description: e.target.value }))}
-                      className="text-gray-600 bg-transparent border-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg px-2 py-1 w-full mt-2 resize-none"
+                      className="text-gray-600 bg-transparent border-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-sm px-2 py-1 w-full mt-2 resize-none"
                       placeholder="Form description"
                       rows={2}
                     />
@@ -857,7 +857,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                                         setSelectedField(field.id);
                                         setMobileFieldEditorOpen(true);
                                       }}
-                                      className="p-1 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                      className="p-1 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-sm transition-colors"
                                     >
                                       <Settings className="w-4 h-4" />
                                     </button>
@@ -883,7 +883,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                               <p className="text-sm">Add fields from the sidebar to get started</p>
                               <button
                                 onClick={() => setMobileSidebarOpen(true)}
-                                className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 md:hidden"
+                                className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-sm hover:bg-blue-700 md:hidden"
                               >
                                 Open Field Library
                               </button>
@@ -969,7 +969,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                     </div>
                     
                     {formSettings.requireLogin && (
-                      <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                      <div className="p-4 bg-blue-50 border border-blue-200 rounded-sm">
                         <div className="flex items-center space-x-2 text-blue-800">
                           <AlertCircle className="w-5 h-5" />
                           <span className="font-medium">Login Required</span>

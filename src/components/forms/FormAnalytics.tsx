@@ -70,7 +70,7 @@ const FormAnalytics: React.FC<FormAnalyticsProps> = ({ formId, onClose }) => {
   if (loading) {
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+        <div className="bg-white rounded-sm shadow-xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
           <div className="p-8 text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
             <p className="text-gray-600">Loading analytics...</p>
@@ -83,14 +83,14 @@ const FormAnalytics: React.FC<FormAnalyticsProps> = ({ formId, onClose }) => {
   if (!analytics) return null;
 
   const StatCard = ({ icon: Icon, title, value, subtitle, trend }: any) => (
-    <div className="bg-white border border-gray-200 rounded-lg p-6">
+    <div className="bg-white border border-gray-200 rounded-sm p-6">
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm font-medium text-gray-600">{title}</p>
           <p className="text-2xl font-bold text-gray-900">{value}</p>
           {subtitle && <p className="text-sm text-gray-500">{subtitle}</p>}
         </div>
-        <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+        <div className="w-12 h-12 bg-blue-100 rounded-sm flex items-center justify-center">
           <Icon className="w-6 h-6 text-blue-600" />
         </div>
       </div>
@@ -105,12 +105,12 @@ const FormAnalytics: React.FC<FormAnalyticsProps> = ({ formId, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-gray-50 rounded-lg shadow-xl max-w-6xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+      <div className="bg-gray-50 rounded-sm shadow-xl max-w-6xl w-full mx-4 max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="bg-white border-b border-gray-200 p-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-blue-100 rounded-sm flex items-center justify-center">
                 <BarChart3 className="w-5 h-5 text-blue-600" />
               </div>
               <div>
@@ -168,7 +168,7 @@ const FormAnalytics: React.FC<FormAnalyticsProps> = ({ formId, onClose }) => {
           </div>
 
           {/* Conversion Trend Chart */}
-          <div className="bg-white border border-gray-200 rounded-lg p-6 mb-8">
+          <div className="bg-white border border-gray-200 rounded-sm p-6 mb-8">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold text-gray-900">Conversion Trend</h3>
               <button className="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md">
@@ -218,12 +218,12 @@ const FormAnalytics: React.FC<FormAnalyticsProps> = ({ formId, onClose }) => {
           </div>
 
           {/* Field Analytics */}
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
+          <div className="bg-white border border-gray-200 rounded-sm p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-6">Field Performance</h3>
             
             <div className="space-y-4">
               {analytics.fieldAnalytics.map((field, index) => (
-                <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-sm">
                   <div className="flex-1">
                     <h4 className="font-medium text-gray-900">{field.fieldLabel}</h4>
                     <div className="flex items-center space-x-4 mt-2 text-sm text-gray-600">

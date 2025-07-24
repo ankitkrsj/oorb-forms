@@ -62,7 +62,7 @@ const RegisterPage: React.FC = () => {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
-          <div className="mx-auto w-12 h-12 sm:w-16 sm:h-16 bg-blue-600 rounded-lg flex items-center justify-center">
+          <div className="mx-auto w-12 h-12 sm:w-16 sm:h-16 bg-blue-600 rounded-sm flex items-center justify-center">
             <FileText className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
           </div>
           <h2 className="mt-6 text-2xl sm:text-3xl font-bold text-gray-900">

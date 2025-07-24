@@ -90,7 +90,7 @@ const FormHeader: React.FC<FormHeaderProps> = ({ form, showStats = false }) => {
         )}
 
         {/* Required Fields Notice */}
-        <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+        <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-sm">
           <p className="text-sm text-blue-800">
             <span className="font-medium">Note:</span> Fields marked with an asterisk (*) are required.
           </p>

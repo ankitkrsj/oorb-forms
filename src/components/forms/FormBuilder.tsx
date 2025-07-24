@@ -398,7 +398,7 @@ const FormBuilder: React.FC<FormBuilderProps> = ({ formId, onBack, onViewRespons
         </div>
         
         <div className="max-w-2xl mx-auto p-6">
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+          <div className="bg-white rounded-sm shadow-sm border border-gray-200 p-8">
             <div className="mb-8">
               <h1 className="text-2xl font-bold text-gray-900 mb-2">{form.title}</h1>
               <p className="text-gray-600">{form.description}</p>
@@ -539,7 +539,7 @@ const FormBuilder: React.FC<FormBuilderProps> = ({ formId, onBack, onViewRespons
           {/* Form Builder */}
           <div className="flex-1 p-6">
             <div className="max-w-2xl mx-auto">
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+              <div className="bg-white rounded-sm shadow-sm border border-gray-200 p-8">
                 <div className="mb-8">
                   <input
                     type="text"
@@ -567,7 +567,7 @@ const FormBuilder: React.FC<FormBuilderProps> = ({ formId, onBack, onViewRespons
                               <div
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
-                                className={`border rounded-lg p-4 bg-white transition-all ${
+                                className={`border rounded-sm p-4 bg-white transition-all ${
                                   selectedField === field.id ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-200'
                                 } ${snapshot.isDragging ? 'shadow-lg' : ''}`}
                                 onClick={() => setSelectedField(field.id)}
@@ -606,7 +606,7 @@ const FormBuilder: React.FC<FormBuilderProps> = ({ formId, onBack, onViewRespons
                                 
                                 {/* Drag indicator */}
                                 {snapshot.isDragging && (
-                                  <div className="absolute inset-0 bg-blue-100 border-2 border-dashed border-blue-300 rounded-lg flex items-center justify-center">
+                                  <div className="absolute inset-0 bg-blue-100 border-2 border-dashed border-blue-300 rounded-sm flex items-center justify-center">
                                     <span className="text-blue-600 font-medium">Moving field...</span>
                                   </div>
                                 )}

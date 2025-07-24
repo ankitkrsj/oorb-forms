@@ -28,7 +28,7 @@ const Header: React.FC = () => {
           <div className="relative">
             <button
               onClick={() => setShowProfileDropdown(!showProfileDropdown)}
-              className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              className="flex items-center space-x-3 p-2 rounded-sm hover:bg-gray-100 transition-colors"
             >
               {user?.avatar ? (
                 <img 

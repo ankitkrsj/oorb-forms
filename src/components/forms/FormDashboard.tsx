@@ -298,7 +298,7 @@ const FormDashboard: React.FC<FormDashboardProps> = ({
     if (!isActive) return null;
 
     return (
-      <div className="absolute right-0 top-8 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+      <div className="absolute right-0 top-8 w-48 bg-white rounded-sm shadow-lg border border-gray-200 py-2 z-50">
         {isFolder ? (
           <>
             <button
@@ -410,7 +410,7 @@ const FormDashboard: React.FC<FormDashboardProps> = ({
     
     return (
       <div
-        className={`group relative bg-white border border-transparent hover:border-blue-300 hover:bg-blue-50 rounded-lg p-3 cursor-pointer transition-all duration-200 ${
+        className={`group relative bg-white border border-transparent hover:border-blue-300 hover:bg-blue-50 rounded-sm p-3 cursor-pointer transition-all duration-200 ${
           !isFolder ? 'draggable' : ''
         }`}
         onClick={() => handleItemClick(item._id, type)}
@@ -424,7 +424,7 @@ const FormDashboard: React.FC<FormDashboardProps> = ({
           <div className="w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center relative">
             {isFolder ? (
               <div 
-                className="w-10 h-10 sm:w-14 sm:h-14 rounded-lg flex items-center justify-center"
+                className="w-10 h-10 sm:w-14 sm:h-14 rounded-sm flex items-center justify-center"
                 style={{ backgroundColor: (item as FolderItem).color + '20' }}
               >
                 <Folder 
@@ -434,7 +434,7 @@ const FormDashboard: React.FC<FormDashboardProps> = ({
               </div>
             ) : (
               <>
-                <div className="w-10 h-10 sm:w-14 sm:h-14 bg-blue-50 rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 sm:w-14 sm:h-14 bg-blue-50 rounded-sm flex items-center justify-center">
                   <FileText className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" />
                 </div>
                 {/* Status Dot */}
@@ -496,7 +496,7 @@ const FormDashboard: React.FC<FormDashboardProps> = ({
           <div className="flex items-center justify-between">
             {/* Logo */}
             {/* <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-600 rounded-sm flex items-center justify-center">
                 <FileText className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
               </div>
               <div className="hidden sm:block">
@@ -524,7 +524,7 @@ const FormDashboard: React.FC<FormDashboardProps> = ({
             <div className="relative">
               <button
                 onClick={() => setShowProfileDropdown(!showProfileDropdown)}
-                className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                className="flex items-center space-x-3 p-2 rounded-sm hover:bg-gray-100 transition-colors"
               >
                 {user?.avatar ? (
                   <img 
@@ -544,7 +544,7 @@ const FormDashboard: React.FC<FormDashboardProps> = ({
               </button>
 
               {showProfileDropdown && (
-                <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+                <div className="absolute right-0 mt-2 w-64 bg-white rounded-sm shadow-lg border border-gray-200 py-2 z-50">
                   {/* Profile Header */}
                   <div className="px-4 py-3 border-b border-gray-100">
                     <div className="flex items-center space-x-3">
@@ -627,10 +627,10 @@ const FormDashboard: React.FC<FormDashboardProps> = ({
             {/* Blank Form */}
             <div 
               onClick={onCreateForm}
-              className="bg-blue-200 rounded-lg border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-all cursor-pointer group"
+              className="bg-blue-200 rounded-sm border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-all cursor-pointer group"
             >
               <div className="flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4">
-                <div className="w-16 h-20 sm:w-20 sm:h-24  rounded-lg  border-gray-200 flex items-center justify-center group-hover:border-blue-500 transition-colors relative">
+                <div className="w-16 h-20 sm:w-20 sm:h-24  rounded-sm  border-gray-200 flex items-center justify-center group-hover:border-blue-500 transition-colors relative">
                   <div className="absolute top-2 left-2 w-2 h-2 bg-blue-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   {/* <FileText className="w-8 h-8 sm:w-10 sm:h-10 text-gray-400 group-hover:text-blue-500" /> */}
 <img src={form3d} alt="form" className="object-contain" />
@@ -647,10 +647,10 @@ const FormDashboard: React.FC<FormDashboardProps> = ({
             {/* Create by AI */}
             <div 
               onClick={() => setShowAIBuilder(true)}
-              className="bg-violet-200 rounded-lg border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-all cursor-pointer group"
+              className="bg-violet-200 rounded-sm border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-all cursor-pointer group"
             >
               <div className="flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4">
-                <div className="w-16 h-20 sm:w-20 sm:h-24 bg-purple-50 rounded-lg  flex items-center justify-center group-hover:border-purple-500 transition-colors relative">
+                <div className="w-16 h-20 sm:w-20 sm:h-24 bg-purple-50 rounded-sm  flex items-center justify-center group-hover:border-purple-500 transition-colors relative">
                   <div className="absolute top-2 left-2 w-2 h-2 bg-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   {/* <Bot className="w-8 h-8 sm:w-10 sm:h-10 text-purple-400 group-hover:text-purple-500" /> */}
                   <img src={ai3d} alt="AI form builder" />
@@ -667,10 +667,10 @@ const FormDashboard: React.FC<FormDashboardProps> = ({
             {/* Use Template */}
             <div 
               onClick={() => setShowTemplates(true)}
-              className="bg-green-200 rounded-lg border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-all cursor-pointer group sm:col-span-2 lg:col-span-1"
+              className="bg-green-200 rounded-sm border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-all cursor-pointer group sm:col-span-2 lg:col-span-1"
             >
               <div className="flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4">
-                <div className="w-16 h-20 sm:w-20 sm:h-24  rounded-lg flex items-center justify-center group-hover:border-green-500 transition-colors relative">
+                <div className="w-16 h-20 sm:w-20 sm:h-24  rounded-sm flex items-center justify-center group-hover:border-green-500 transition-colors relative">
                   <div className="absolute top-2 left-2 w-2 h-2  rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   {/* <ImageIcon className="w-8 h-8 sm:w-10 sm:h-10 text-green-400 group-hover:text-green-500" /> */}
                   <img src={temp3d} alt="temp" className="object-contain" />
@@ -696,7 +696,7 @@ const FormDashboard: React.FC<FormDashboardProps> = ({
                 setSelectedFolder(null);
                 setShowFolderModal(true);
               }}
-              className="flex items-center space-x-2 px-3 sm:px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+              className="flex items-center space-x-2 px-3 sm:px-4 py-2 bg-blue-600 text-white rounded-sm hover:bg-blue-700 transition-colors text-sm"
             >
               <FolderPlus className="w-4 h-4" />
               <span className="hidden sm:inline">New Folder</span>
@@ -705,7 +705,7 @@ const FormDashboard: React.FC<FormDashboardProps> = ({
             
             <button
               onClick={onCreateForm}
-              className="flex items-center space-x-2 px-3 sm:px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm"
+              className="flex items-center space-x-2 px-3 sm:px-4 py-2 bg-green-600 text-white rounded-sm hover:bg-green-700 transition-colors text-sm"
             >
               <Plus className="w-4 h-4" />
               <span className="hidden sm:inline">New Form</span>
@@ -714,7 +714,7 @@ const FormDashboard: React.FC<FormDashboardProps> = ({
             
             <button
               onClick={() => setShowMyResponses(true)}
-              className="flex items-center space-x-2 px-3 sm:px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm"
+              className="flex items-center space-x-2 px-3 sm:px-4 py-2 bg-purple-600 text-white rounded-sm hover:bg-purple-700 transition-colors text-sm"
             >
               <User className="w-4 h-4" />
               <span className="hidden sm:inline">My Responses</span>
@@ -726,7 +726,7 @@ const FormDashboard: React.FC<FormDashboardProps> = ({
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value as any)}
-              className="flex-1 sm:flex-none px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+              className="flex-1 sm:flex-none px-3 py-2 text-sm border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
             >
               <option value="all">All Status</option>
               <option value="published">Published</option>
@@ -734,7 +734,7 @@ const FormDashboard: React.FC<FormDashboardProps> = ({
               <option value="closed">Closed</option>
             </select>
 
-            <div className="flex items-center border border-gray-300 rounded-lg">
+            <div className="flex items-center border border-gray-300 rounded-sm">
               <button
                 onClick={() => setViewMode('grid')}
                 className={`p-2 ${viewMode === 'grid' ? 'bg-blue-100 text-blue-600' : 'text-gray-600 hover:bg-gray-100'}`}
@@ -771,7 +771,7 @@ const FormDashboard: React.FC<FormDashboardProps> = ({
             ))}
           </div>
         ) : (
-          <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+          <div className="bg-white rounded-sm border border-gray-200 overflow-hidden">
             <div className="hidden sm:grid sm:grid-cols-4 gap-4 p-4 border-b border-gray-200 bg-gray-50 text-sm font-medium text-gray-700">
               <div className="flex items-center justify-between">
                 <span>Name</span>
@@ -878,7 +878,7 @@ const FormDashboard: React.FC<FormDashboardProps> = ({
             {!searchTerm && filterStatus === 'all' && forms.length === 0 && (
               <button
                 onClick={onCreateForm}
-                className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+                className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-blue-600 text-white font-medium rounded-sm hover:bg-blue-700 transition-colors"
               >
                 <Plus className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                 Create Your First Form

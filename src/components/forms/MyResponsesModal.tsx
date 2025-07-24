@@ -49,7 +49,7 @@ const MyResponsesModal: React.FC<MyResponsesModalProps> = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+      <div className="bg-white rounded-sm shadow-xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center justify-between">
             <div>
@@ -80,7 +80,7 @@ const MyResponsesModal: React.FC<MyResponsesModalProps> = ({ onClose }) => {
           ) : (
             <div className="space-y-4">
               {responses.map((response) => (
-                <div key={response._id} className="bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors">
+                <div key={response._id} className="bg-gray-50 rounded-sm p-4 hover:bg-gray-100 transition-colors">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <h3 className="font-medium text-gray-900 mb-2">{response.formTitle}</h3>
@@ -139,7 +139,7 @@ const MyResponsesModal: React.FC<MyResponsesModalProps> = ({ onClose }) => {
       {/* Response Detail Modal */}
       {selectedResponse && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-60">
-          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+          <div className="bg-white rounded-sm shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
             <div className="p-6 border-b border-gray-200">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-gray-900">Response Details</h3>

@@ -441,7 +441,7 @@ const FormRenderer: React.FC = () => {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
         <div className="max-w-md mx-auto text-center">
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 sm:p-8">
+          <div className="bg-white rounded-sm shadow-sm border border-gray-200 p-6 sm:p-8">
             <CheckCircle className="w-12 h-12 sm:w-16 sm:h-16 text-green-500 mx-auto mb-4" />
             <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
               Thank You{user ? `, ${user.name}` : ''}!
@@ -473,7 +473,7 @@ const FormRenderer: React.FC = () => {
       {/* Login Required Modal */}
       {showLoginRequired && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
+          <div className="bg-white rounded-sm shadow-xl max-w-md w-full mx-4">
             <div className="p-6 border-b border-gray-200">
               <h3 className="text-lg font-semibold text-gray-900">Login Required</h3>
             </div>
@@ -503,7 +503,7 @@ const FormRenderer: React.FC = () => {
       <div className="max-w-2xl mx-auto px-4 py-6 sm:py-8">
         {/* User Status Indicator */}
         <div className="mb-4">
-          <div className="bg-white rounded-lg border border-gray-200 p-3">
+          <div className="bg-white rounded-sm border border-gray-200 p-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 {user ? (
@@ -534,7 +534,7 @@ const FormRenderer: React.FC = () => {
           </div>
         </div>
         
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 sm:p-8">
+        <div className="bg-white rounded-sm shadow-sm border border-gray-200 p-6 sm:p-8">
           {/* Progress Bar */}
           {form.settings?.showProgressBar && form.fields.length > 5 && (
             <div className="mb-6 sm:mb-8">
@@ -553,7 +553,7 @@ const FormRenderer: React.FC = () => {
 
           {/* Login Requirement Notice */}
           {form.settings?.requireLogin && !user && !showLoginRequired && (
-            <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-sm">
               <div className="flex items-center space-x-2 text-yellow-800">
                 <AlertCircle className="w-5 h-5" />
                 <span className="font-medium">Sign in required</span>

@@ -56,14 +56,14 @@ const FileItem: React.FC<FileItemProps> = ({
 
   return (
     <div
-      className={`group relative bg-white border border-transparent hover:border-blue-300 hover:bg-blue-50 rounded-lg p-3 cursor-pointer transition-all duration-200`}
+      className={`group relative bg-white border border-transparent hover:border-blue-300 hover:bg-blue-50 rounded-sm p-3 cursor-pointer transition-all duration-200`}
       onClick={handleItemClick}
     >
       <div className="flex flex-col items-center text-center space-y-2">
         <div className="w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center relative">
           {isFolder ? (
             <div 
-              className="w-10 h-10 sm:w-14 sm:h-14 rounded-lg flex items-center justify-center"
+              className="w-10 h-10 sm:w-14 sm:h-14 rounded-sm flex items-center justify-center"
               style={{ backgroundColor: folderItem.color + '20' }}
             >
               <Folder 
@@ -73,7 +73,7 @@ const FileItem: React.FC<FileItemProps> = ({
             </div>
           ) : (
             <>
-              <div className="w-10 h-10 sm:w-14 sm:h-14 bg-blue-50 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 sm:w-14 sm:h-14 bg-blue-50 rounded-sm flex items-center justify-center">
                 <FileText className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" />
               </div>
               <div 
@@ -108,7 +108,7 @@ const FileItem: React.FC<FileItemProps> = ({
           <MoreVertical className="w-3 h-3 text-gray-600" />
         </button>
         {activeDropdown === item._id && (
-          <div className="absolute right-0 top-8 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+          <div className="absolute right-0 top-8 w-48 bg-white rounded-sm shadow-lg border border-gray-200 py-2 z-50">
             {isFolder ? (
               <>
                 <button

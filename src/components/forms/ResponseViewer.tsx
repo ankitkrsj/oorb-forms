@@ -169,14 +169,14 @@ const ResponseViewer: React.FC<ResponseViewerProps> = ({ formId, onBack }) => {
               <div className="hidden sm:flex items-center space-x-2">
                 <button
                   onClick={downloadExcel}
-                  className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm shadow-lg transition-all"
+                  className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-sm hover:bg-green-700 text-sm shadow-lg transition-all"
                 >
                   <Download className="w-4 h-4" />
                   <span>Excel</span>
                 </button>
                 <button
                   onClick={downloadCSV}
-                  className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm shadow-lg transition-all"
+                  className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-sm hover:bg-blue-700 text-sm shadow-lg transition-all"
                 >
                   <Download className="w-4 h-4" />
                   <span>CSV</span>
@@ -189,7 +189,7 @@ const ResponseViewer: React.FC<ResponseViewerProps> = ({ formId, onBack }) => {
               <div className="sm:hidden">
                 <button
                   onClick={() => setShowMobileMenu(!showMobileMenu)}
-                  className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                  className="p-2 rounded-sm hover:bg-gray-100 transition-colors"
                 >
                   <Menu className="w-5 h-5 text-gray-600" />
                 </button>
@@ -208,7 +208,7 @@ const ResponseViewer: React.FC<ResponseViewerProps> = ({ formId, onBack }) => {
                 <h2 className="text-lg font-semibold text-gray-900">Export Options</h2>
                 <button
                   onClick={() => setShowMobileMenu(false)}
-                  className="p-2 rounded-lg hover:bg-gray-100"
+                  className="p-2 rounded-sm hover:bg-gray-100"
                 >
                   <X className="w-5 h-5 text-gray-600" />
                 </button>
@@ -221,7 +221,7 @@ const ResponseViewer: React.FC<ResponseViewerProps> = ({ formId, onBack }) => {
                   downloadExcel();
                   setShowMobileMenu(false);
                 }}
-                className="w-full flex items-center space-x-3 px-4 py-3 bg-green-600 text-white rounded-lg shadow-lg"
+                className="w-full flex items-center space-x-3 px-4 py-3 bg-green-600 text-white rounded-sm shadow-lg"
               >
                 <Download className="w-5 h-5" />
                 <span>Download Excel</span>
@@ -231,7 +231,7 @@ const ResponseViewer: React.FC<ResponseViewerProps> = ({ formId, onBack }) => {
                   downloadCSV();
                   setShowMobileMenu(false);
                 }}
-                className="w-full flex items-center space-x-3 px-4 py-3 bg-blue-600 text-white rounded-lg shadow-lg"
+                className="w-full flex items-center space-x-3 px-4 py-3 bg-blue-600 text-white rounded-sm shadow-lg"
               >
                 <Download className="w-5 h-5" />
                 <span>Download CSV</span>
@@ -288,13 +288,13 @@ const ResponseViewer: React.FC<ResponseViewerProps> = ({ formId, onBack }) => {
                   <div className="flex items-center space-x-2">
                     <button
                       onClick={() => setSelectedResponse(response)}
-                      className="px-3 py-1 text-blue-600 hover:bg-blue-50 rounded-lg text-sm transition-colors"
+                      className="px-3 py-1 text-blue-600 hover:bg-blue-50 rounded-sm text-sm transition-colors"
                     >
                       View Details
                     </button>
                     <button
                       onClick={() => deleteResponse(response._id)}
-                      className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg self-end sm:self-auto transition-colors"
+                      className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-sm self-end sm:self-auto transition-colors"
                       title="Delete response"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -328,7 +328,7 @@ const ResponseViewer: React.FC<ResponseViewerProps> = ({ formId, onBack }) => {
                 <button
                   onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                   disabled={currentPage === 1}
-                  className="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-50 text-sm transition-colors"
+                  className="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50 text-sm transition-colors"
                 >
                   Previous
                 </button>
@@ -340,7 +340,7 @@ const ResponseViewer: React.FC<ResponseViewerProps> = ({ formId, onBack }) => {
                 <button
                   onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
                   disabled={currentPage === totalPages}
-                  className="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-50 text-sm transition-colors"
+                  className="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50 text-sm transition-colors"
                 >
                   Next
                 </button>
@@ -359,7 +359,7 @@ const ResponseViewer: React.FC<ResponseViewerProps> = ({ formId, onBack }) => {
                 <h3 className="text-lg font-semibold text-gray-900">Response Details</h3>
                 <button
                   onClick={() => setSelectedResponse(null)}
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                  className="p-2 hover:bg-gray-100 rounded-sm transition-colors"
                 >
                   <X className="w-5 h-5 text-gray-600" />
                 </button>

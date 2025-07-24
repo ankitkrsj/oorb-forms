@@ -112,10 +112,10 @@ const IntegrationsPanel: React.FC<IntegrationsPanelProps> = ({ formId, onClose }
     const Icon = integration.icon;
     
     return (
-      <div key={integration.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+      <div key={integration.id} className="border border-gray-200 rounded-sm p-4 hover:shadow-md transition-shadow">
         <div className="flex items-start justify-between mb-3">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+            <div className="w-10 h-10 bg-gray-100 rounded-sm flex items-center justify-center">
               <Icon className="w-5 h-5 text-gray-600" />
             </div>
             <div>
@@ -171,10 +171,10 @@ const IntegrationsPanel: React.FC<IntegrationsPanelProps> = ({ formId, onClose }
 
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
+        <div className="bg-white rounded-sm shadow-xl max-w-md w-full mx-4">
           <div className="p-6 border-b border-gray-200">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-gray-100 rounded-sm flex items-center justify-center">
                 <Icon className="w-5 h-5 text-gray-600" />
               </div>
               <div>
@@ -270,11 +270,11 @@ const IntegrationsPanel: React.FC<IntegrationsPanelProps> = ({ formId, onClose }
   return (
     <>
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40">
-        <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+        <div className="bg-white rounded-sm shadow-xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
           <div className="p-6 border-b border-gray-200">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-purple-100 rounded-sm flex items-center justify-center">
                   <Zap className="w-5 h-5 text-purple-600" />
                 </div>
                 <div>
@@ -293,7 +293,7 @@ const IntegrationsPanel: React.FC<IntegrationsPanelProps> = ({ formId, onClose }
 
           <div className="p-6">
             {/* Tabs */}
-            <div className="flex space-x-1 mb-6 bg-gray-100 p-1 rounded-lg">
+            <div className="flex space-x-1 mb-6 bg-gray-100 p-1 rounded-sm">
               <button
                 onClick={() => setActiveTab('available')}
                 className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition-colors ${

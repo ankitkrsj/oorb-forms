@@ -86,11 +86,11 @@ function MyComponent() {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+      <div className="bg-white rounded-sm shadow-xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-blue-100 rounded-sm flex items-center justify-center">
                 <Code className="w-5 h-5 text-blue-600" />
               </div>
               <div>
@@ -248,7 +248,7 @@ function MyComponent() {
                   <Eye className="w-5 h-5 mr-2" />
                   Preview
                 </h3>
-                <div className="border border-gray-200 rounded-lg p-4 bg-gray-50">
+                <div className="border border-gray-200 rounded-sm p-4 bg-gray-50">
                   <iframe
                     src={previewUrl}
                     width="100%"
@@ -269,7 +269,7 @@ function MyComponent() {
               </h3>
               
               <div className="relative">
-                <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm">
+                <pre className="bg-gray-900 text-gray-100 p-4 rounded-sm overflow-x-auto text-sm">
                   <code>{generateEmbedCode()}</code>
                 </pre>
                 <button
@@ -282,14 +282,14 @@ function MyComponent() {
               </div>
 
               {embedType === 'react' && (
-                <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-sm">
                   <h4 className="font-medium text-blue-900 mb-2">Installation</h4>
                   <code className="text-sm text-blue-800">npm install @oorb/forms-react</code>
                 </div>
               )}
 
               {embedType === 'html' && (
-                <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-sm">
                   <h4 className="font-medium text-green-900 mb-2">CDN Link</h4>
                   <code className="text-sm text-green-800">https://cdn.oorb.com/forms.js</code>
                 </div>

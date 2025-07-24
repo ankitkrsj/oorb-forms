@@ -58,7 +58,7 @@ const ConditionalLogic: React.FC<ConditionalLogicProps> = ({ fields, rules, onRu
 
   if (!showRules) {
     return (
-      <div className="border border-gray-200 rounded-lg p-4">
+      <div className="border border-gray-200 rounded-sm p-4">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="font-medium text-gray-900">Conditional Logic</h3>
@@ -82,7 +82,7 @@ const ConditionalLogic: React.FC<ConditionalLogicProps> = ({ fields, rules, onRu
   }
 
   return (
-    <div className="border border-gray-200 rounded-lg p-4">
+    <div className="border border-gray-200 rounded-sm p-4">
       <div className="flex items-center justify-between mb-4">
         <div>
           <h3 className="font-medium text-gray-900">Conditional Logic</h3>
@@ -99,7 +99,7 @@ const ConditionalLogic: React.FC<ConditionalLogicProps> = ({ fields, rules, onRu
 
       <div className="space-y-4">
         {rules.map((rule, index) => (
-          <div key={rule.id} className="border border-gray-200 rounded-lg p-4 bg-gray-50">
+          <div key={rule.id} className="border border-gray-200 rounded-sm p-4 bg-gray-50">
             <div className="flex items-center justify-between mb-3">
               <h4 className="font-medium text-gray-900">Rule {index + 1}</h4>
               <button
@@ -205,7 +205,7 @@ const ConditionalLogic: React.FC<ConditionalLogicProps> = ({ fields, rules, onRu
 
         <button
           onClick={addRule}
-          className="w-full px-4 py-2 border-2 border-dashed border-gray-300 text-gray-600 rounded-lg hover:border-blue-400 hover:text-blue-600 transition-colors flex items-center justify-center"
+          className="w-full px-4 py-2 border-2 border-dashed border-gray-300 text-gray-600 rounded-sm hover:border-blue-400 hover:text-blue-600 transition-colors flex items-center justify-center"
         >
           <Plus className="w-4 h-4 mr-2" />
           Add Rule

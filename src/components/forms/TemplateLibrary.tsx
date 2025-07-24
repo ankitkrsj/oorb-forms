@@ -148,7 +148,7 @@ const TemplateLibrary: React.FC<TemplateLibraryProps> = ({ onSelectTemplate, onC
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-xl max-w-6xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+      <div className="bg-white rounded-sm shadow-xl max-w-6xl w-full mx-4 max-h-[90vh] overflow-y-auto">
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center justify-between">
             <div>
@@ -199,7 +199,7 @@ const TemplateLibrary: React.FC<TemplateLibraryProps> = ({ onSelectTemplate, onC
           {/* Templates Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredTemplates.map(template => (
-              <div key={template.id} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+              <div key={template.id} className="border border-gray-200 rounded-sm p-6 hover:shadow-md transition-shadow">
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex-1">
                     <h3 className="text-lg font-semibold text-gray-900 mb-1">{template.title}</h3>

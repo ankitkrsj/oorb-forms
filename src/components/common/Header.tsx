@@ -54,7 +54,7 @@ const Header: React.FC<HeaderProps> = ({ showAuthButtons = true }) => {
           <div className="flex items-center justify-between h-14">
             {/* Logo */}
             <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-blue-600 rounded-sm flex items-center justify-center">
                 <FileText className="w-5 h-5 text-white" />
               </div>
               <span className="text-xl font-bold text-gray-900">OORB Forms</span>
