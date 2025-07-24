@@ -74,9 +74,9 @@ const ResponseViewer: React.FC<ResponseViewerProps> = ({ formId, onBack }) => {
     } catch (error) {
       console.error('ResponseViewer: Error loading responses:', error);
       
-      if (error.response?.status === 404) {
+      if ((error as any).response?.status === 404) {
         toast.error('Form not found or no responses available');
-      } else if (error.response?.status === 403) {
+      } else if ((error as any).response?.status === 403) {
         toast.error('You do not have permission to view these responses');
       } else {
         toast.error('Failed to load responses. Please try again.');

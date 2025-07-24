@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { 
   Plus, Search, Eye, Edit, Trash2, Copy, Share2, BarChart3, 
   ExternalLink, FileText, Folder, FolderOpen, FolderPlus, 
-  Settings, LogOut, Grid as Grid3X3, List, ArrowLeft, X, 
+  Settings, LogOut, Grid3x3, List, ArrowLeft, X, 
   MoreVertical, User, Bot, Image as ImageIcon 
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
@@ -739,7 +739,7 @@ const FormDashboard: React.FC<FormDashboardProps> = ({
                 onClick={() => setViewMode('grid')}
                 className={`p-2 ${viewMode === 'grid' ? 'bg-blue-100 text-blue-600' : 'text-gray-600 hover:bg-gray-100'}`}
               >
-                <Grid3X3 className="w-4 h-4" />
+                <Grid3x3 className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setViewMode('list')}

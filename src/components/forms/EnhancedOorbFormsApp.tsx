@@ -92,7 +92,7 @@ const EnhancedOorbFormsApp: React.FC = () => {
                   onCreateForm={handleCreateForm}
                   onEditForm={handleEditForm}
                   currentView={currentView}
-                  onNavigate={setCurrentView}
+                  onNavigate={handleNavigate}
                   onToggle={handleSidebarToggle}
                 />
               </div>
@@ -139,7 +139,7 @@ const EnhancedOorbFormsApp: React.FC = () => {
                   onCreateForm={handleCreateForm}
                   onEditForm={handleEditForm}
                   currentView={currentView}
-                  onNavigate={setCurrentView}
+                  onNavigate={handleNavigate}
                   onToggle={handleSidebarToggle}
                 />
               </div>

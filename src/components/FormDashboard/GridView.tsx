@@ -1,5 +1,5 @@
 import React from 'react';
-import FileItem from './FileItem';
+import { Grid3x3, List } from 'lucide-react';
 import { FormItem, FolderItem } from './types';
 
 interface GridViewProps {
