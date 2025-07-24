@@ -1,6 +1,7 @@
 import React from 'react';
-import FileItem from './FileItem';
+import { Grid3x3, List } from 'lucide-react';
 import { FormItem, FolderItem } from './types';
+import FileItem from './FileItem';
 
 interface GridViewProps {
   filteredFolders: FolderItem[];

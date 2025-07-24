@@ -71,6 +71,10 @@ const EnhancedOorbFormsApp: React.FC = () => {
     setSidebarMinimized(minimized);
   };
 
+  const handleNavigate = (view: string) => {
+    setCurrentView(view as View);
+  };
+
   const getSidebarWidth = () => {
     if (isMobile) return 0;
     return sidebarMinimized ? 64 : 256; // 16 for minimized, 64 for full (in pixels)
@@ -88,7 +92,7 @@ const EnhancedOorbFormsApp: React.FC = () => {
                   onCreateForm={handleCreateForm}
                   onEditForm={handleEditForm}
                   currentView={currentView}
-                  onNavigate={setCurrentView}
+                  onNavigate={handleNavigate}
                   onToggle={handleSidebarToggle}
                 />
               </div>
@@ -135,7 +139,7 @@ const EnhancedOorbFormsApp: React.FC = () => {
                   onCreateForm={handleCreateForm}
                   onEditForm={handleEditForm}
                   currentView={currentView}
-                  onNavigate={setCurrentView}
+                  onNavigate={handleNavigate}
                   onToggle={handleSidebarToggle}
                 />
               </div>

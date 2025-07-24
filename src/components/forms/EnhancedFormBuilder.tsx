@@ -1,14 +1,14 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { 
-  Type, 
-  CheckSquare, 
-  Circle, 
-  Calendar, 
-  Mail, 
-  Phone, 
-  FileText, 
-  Upload, 
+import {
+  Type,
+  CheckSquare,
+  Circle,
+  Calendar,
+  Mail,
+  Phone,
+  FileText,
+  Upload,
   Star,
   Plus,
   Trash2,
@@ -56,6 +56,15 @@ interface Form {
   status: 'draft' | 'published' | 'closed';
   shareUrl?: string;
   conditionalRules?: any[];
+  settings?: {
+    allowMultipleResponses?: boolean;
+    requireLogin?: boolean;
+    showProgressBar?: boolean;
+    customTheme?: {
+      primaryColor: string;
+      backgroundColor: string;
+    };
+  };
   theme?: {
     primaryColor: string;
     backgroundColor: string;
@@ -81,7 +90,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
       fontFamily: 'Inter'
     }
   });
-  
+
   const [selectedField, setSelectedField] = useState<string | null>(null);
   const [previewMode, setPreviewMode] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -124,11 +133,37 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
     }
   }, [formId]);
 
+  interface FormSettings {
+    allowMultipleResponses: boolean;
+    requireLogin: boolean;
+    showProgressBar: boolean;
+    customTheme: {
+      primaryColor: string;
+      backgroundColor: string;
+    };
+  }
+
+  // Then in your useEffect:
   useEffect(() => {
     if (form.settings) {
-      setFormSettings(form.settings);
+      setFormSettings({
+        allowMultipleResponses: form.settings.allowMultipleResponses !== undefined
+          ? form.settings.allowMultipleResponses
+          : true,
+        requireLogin: form.settings.requireLogin !== undefined
+          ? form.settings.requireLogin
+          : false,
+        showProgressBar: form.settings.showProgressBar !== undefined
+          ? form.settings.showProgressBar
+          : true,
+        customTheme: form.settings.customTheme || {
+          primaryColor: '#3B82F6',
+          backgroundColor: '#FFFFFF'
+        }
+      });
     }
   }, [form]);
+
   const loadForm = async () => {
     try {
       const response = await formAPI.getForm(formId!);
@@ -149,7 +184,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
       options: ['radio', 'checkbox', 'select'].includes(type) ? ['Option 1', 'Option 2'] : undefined,
       validation: {}
     };
-    
+
     setForm(prev => ({
       ...prev,
       fields: [...prev.fields, newField]
@@ -161,7 +196,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
   const updateField = (fieldId: string, updates: Partial<FormField>) => {
     setForm(prev => ({
       ...prev,
-      fields: prev.fields.map(field => 
+      fields: prev.fields.map(field =>
         field.id === fieldId ? { ...field, ...updates } : field
       )
     }));
@@ -198,7 +233,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
         ...form,
         settings: formSettings
       };
-      
+
       if (form._id) {
         await formAPI.updateForm(form._id, formDataToSave);
         toast.success('Form saved successfully');
@@ -270,7 +305,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
 
   const renderFieldPreview = (field: FormField) => {
     const baseClasses = "w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent";
-    
+
     switch (field.type) {
       case 'text':
       case 'email':
@@ -283,7 +318,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
             disabled={!previewMode}
           />
         );
-      
+
       case 'textarea':
         return (
           <textarea
@@ -293,7 +328,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
             disabled={!previewMode}
           />
         );
-      
+
       case 'select':
         return (
           <select className={baseClasses} disabled={!previewMode}>
@@ -303,7 +338,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
             ))}
           </select>
         );
-      
+
       case 'radio':
         return (
           <div className="space-y-2">
@@ -315,7 +350,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
             ))}
           </div>
         );
-      
+
       case 'checkbox':
         return (
           <div className="space-y-2">
@@ -327,7 +362,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
             ))}
           </div>
         );
-      
+
       case 'date':
         return (
           <input
@@ -336,7 +371,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
             disabled={!previewMode}
           />
         );
-      
+
       case 'file':
         return (
           <div className="border-2 border-dashed border-gray-300 rounded-md p-4 text-center">
@@ -344,7 +379,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
             <p className="text-gray-600">Click to upload or drag and drop</p>
           </div>
         );
-      
+
       case 'rating':
         return (
           <div className="flex space-x-1">
@@ -353,7 +388,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
             ))}
           </div>
         );
-      
+
       default:
         return null;
     }
@@ -364,19 +399,18 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
     if (!field) return null;
 
     return (
-      <div className={`bg-white border-l border-gray-200 p-6 w-80 shadow-lg fixed right-0 top-0 h-full z-20 md:relative md:z-0 ${
-        mobileFieldEditorOpen ? 'block' : 'hidden md:block'
-      }`}>
+      <div className={`bg-white border-l border-gray-200 p-6 w-80 shadow-lg fixed right-0 top-0 h-full z-20 md:relative md:z-0 ${mobileFieldEditorOpen ? 'block' : 'hidden md:block'
+        }`}>
         <div className="flex justify-between items-center mb-4 md:hidden">
           <h3 className="text-lg font-semibold">Field Settings</h3>
-          <button 
+          <button
             onClick={() => setMobileFieldEditorOpen(false)}
             className="p-2 text-gray-500 hover:text-gray-700"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
-        
+
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -389,7 +423,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
               className="w-full px-3 py-2 border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
-          
+
           {['text', 'email', 'phone', 'textarea'].includes(field.type) && (
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -403,7 +437,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
               />
             </div>
           )}
-          
+
           {['radio', 'checkbox', 'select'].includes(field.type) && (
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -445,7 +479,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
               </div>
             </div>
           )}
-          
+
           <div className="flex items-center space-x-2">
             <input
               type="checkbox"
@@ -463,7 +497,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
             field={field}
             onValidationChange={(validation) => updateField(field.id, { validation })}
           />
-          
+
           <button
             onClick={() => deleteField(field.id)}
             className="w-full px-4 py-2 bg-red-600 text-white rounded-sm hover:bg-red-700 transition-colors shadow-lg"
@@ -479,7 +513,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
     <div className="space-y-6">
       <div>
         <h3 className="text-lg font-semibold mb-4">Theme Customization</h3>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -571,14 +605,14 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
             </button>
           </div>
         </div>
-        
+
         <div className="max-w-2xl mx-auto p-6">
           <div className="bg-white rounded-xl shadow-xl border border-gray-200 p-8">
             <div className="mb-8">
               <h1 className="text-2xl font-bold text-gray-900 mb-2">{form.title}</h1>
               <p className="text-gray-600">{form.description}</p>
             </div>
-            
+
             <form className="space-y-6">
               {form.fields.map((field) => (
                 <div key={field.id}>
@@ -589,7 +623,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                   {renderFieldPreview(field)}
                 </div>
               ))}
-              
+
               <button
                 type="submit"
                 className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-sm hover:from-blue-700 hover:to-purple-700 shadow-lg transition-all"
@@ -670,7 +704,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
             </button>
           </div>
         </div>
-        
+
         <h2 className="text-lg font-bold text-gray-900 mb-4">Add Fields</h2>
         <div className="grid grid-cols-2 md:grid-cols-1 gap-2">
           {fieldTypes.map((fieldType) => {
@@ -704,11 +738,10 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                 onChange={(e) => setForm(prev => ({ ...prev, title: e.target.value }))}
                 className="text-lg md:text-xl font-bold bg-transparent border-none focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-sm px-2 py-1 w-full max-w-xs"
               />
-              <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                form.status === 'published' ? 'bg-green-100 text-green-800' :
-                form.status === 'draft' ? 'bg-yellow-100 text-yellow-800' :
-                'bg-red-100 text-red-800'
-              }`}>
+              <span className={`px-2 py-1 text-xs font-medium rounded-full ${form.status === 'published' ? 'bg-green-100 text-green-800' :
+                  form.status === 'draft' ? 'bg-yellow-100 text-yellow-800' :
+                    'bg-red-100 text-red-800'
+                }`}>
                 {form.status}
               </span>
             </div>
@@ -721,7 +754,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                 <Eye className="w-4 h-4" />
                 <span className="hidden md:inline">Preview</span>
               </button>
-              <button 
+              <button
                 onClick={saveForm}
                 disabled={saving}
                 className="flex items-center space-x-1 md:space-x-2 p-2 md:px-4 md:py-2 bg-blue-600 text-white rounded-sm hover:bg-blue-700 disabled:opacity-50 shadow-lg"
@@ -730,7 +763,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                 <Save className="w-4 h-4" />
                 <span className="hidden md:inline">{saving ? 'Saving...' : 'Save'}</span>
               </button>
-              <button 
+              <button
                 onClick={publishForm}
                 disabled={publishing || !form._id}
                 className="flex items-center space-x-1 md:space-x-2 p-2 md:px-4 md:py-2 bg-green-600 text-white rounded-sm hover:bg-green-700 disabled:opacity-50 shadow-lg"
@@ -789,11 +822,10 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as any)}
-                  className={`flex items-center space-x-2 px-1 py-4 border-b-2 font-medium text-sm transition-colors ${
-                    activeTab === tab.id
+                  className={`flex items-center space-x-2 px-1 py-4 border-b-2 font-medium text-sm transition-colors ${activeTab === tab.id
                       ? 'border-blue-500 text-blue-600'
                       : 'border-transparent text-gray-500 hover:text-gray-700'
-                  }`}
+                    }`}
                 >
                   <Icon className="w-4 h-4" />
                   <span>{tab.label}</span>
@@ -836,9 +868,8 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                                 <div
                                   ref={provided.innerRef}
                                   {...provided.draggableProps}
-                                  className={`border rounded-xl p-4 bg-white transition-all shadow-sm ${
-                                    selectedField === field.id ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-200'
-                                  } ${snapshot.isDragging ? 'shadow-2xl' : ''}`}
+                                  className={`border rounded-xl p-4 bg-white transition-all shadow-sm ${selectedField === field.id ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-200'
+                                    } ${snapshot.isDragging ? 'shadow-2xl' : ''}`}
                                   onClick={() => {
                                     setSelectedField(field.id);
                                     setMobileFieldEditorOpen(true);
@@ -862,7 +893,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                                       <Settings className="w-4 h-4" />
                                     </button>
                                   </div>
-                                  
+
                                   <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
                                       {field.label}
@@ -875,7 +906,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                             </Draggable>
                           ))}
                           {provided.placeholder}
-                          
+
                           {form.fields.length === 0 && (
                             <div className="text-center py-12 text-gray-500">
                               <FileText className="w-12 h-12 mx-auto mb-4 text-gray-300" />
@@ -925,9 +956,9 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                         type="checkbox"
                         id="allowMultiple"
                         checked={formSettings.allowMultipleResponses}
-                        onChange={(e) => setFormSettings(prev => ({ 
-                          ...prev, 
-                          allowMultipleResponses: e.target.checked 
+                        onChange={(e) => setFormSettings(prev => ({
+                          ...prev,
+                          allowMultipleResponses: e.target.checked
                         }))}
                         className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                       />
@@ -935,15 +966,15 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                         Allow multiple responses from same user
                       </label>
                     </div>
-                    
+
                     <div className="flex items-center space-x-2">
                       <input
                         type="checkbox"
                         id="requireLogin"
                         checked={formSettings.requireLogin}
-                        onChange={(e) => setFormSettings(prev => ({ 
-                          ...prev, 
-                          requireLogin: e.target.checked 
+                        onChange={(e) => setFormSettings(prev => ({
+                          ...prev,
+                          requireLogin: e.target.checked
                         }))}
                         className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                       />
@@ -951,15 +982,15 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                         Require login to submit
                       </label>
                     </div>
-                    
+
                     <div className="flex items-center space-x-2">
                       <input
                         type="checkbox"
                         id="showProgress"
                         checked={formSettings.showProgressBar}
-                        onChange={(e) => setFormSettings(prev => ({ 
-                          ...prev, 
-                          showProgressBar: e.target.checked 
+                        onChange={(e) => setFormSettings(prev => ({
+                          ...prev,
+                          showProgressBar: e.target.checked
                         }))}
                         className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                       />
@@ -967,7 +998,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                         Show progress bar
                       </label>
                     </div>
-                    
+
                     {formSettings.requireLogin && (
                       <div className="p-4 bg-blue-50 border border-blue-200 rounded-sm">
                         <div className="flex items-center space-x-2 text-blue-800">
@@ -979,7 +1010,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                         </p>
                       </div>
                     )}
-                    
+
                     <div className="border-t border-gray-200 pt-4">
                       <h4 className="text-md font-medium text-gray-900 mb-3">Notification Settings</h4>
                       <div className="space-y-3">
@@ -993,7 +1024,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                             Email notifications for new responses
                           </label>
                         </div>
-                        
+
                         <div className="flex items-center space-x-2">
                           <input
                             type="checkbox"
@@ -1006,7 +1037,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="border-t border-gray-200 pt-4">
                       <h4 className="text-md font-medium text-gray-900 mb-3">Form Behavior</h4>
                       <div className="space-y-3">
@@ -1020,7 +1051,7 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
                             Randomize question order
                           </label>
                         </div>
-                        
+
                         <div className="flex items-center space-x-2">
                           <input
                             type="checkbox"
