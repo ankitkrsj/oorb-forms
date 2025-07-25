@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 5000;
 
 // ✅ Updated CORS options to allow both local and deployed frontend
 const corsOptions = {
-  origin: ['http://localhost:5173', 'https://oorb-forms.vercel.app', 'https://forms.oorbtech.com/'],
+  origin: ['http://localhost:5173', 'https://oorb-forms.vercel.app', 'https://forms.oorbtech.com'],
   credentials: true,
   optionsSuccessStatus: 200,
   allowedHeaders: ['Content-Type', 'Authorization']
