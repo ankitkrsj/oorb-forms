@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Sparkles, Wand2, Send, Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
-const DEEPSEEK_API_KEY = 'sk-your-deepseek-api-key'; // Replace with your actual API key
-const DEEPSEEK_API_URL = 'https://api.deepseek.com/v1/chat/completions';
+// const DEEPSEEK_API_KEY = 'sk-your-deepseek-api-key'; // Replace with your actual API key
+// const DEEPSEEK_API_URL = 'https://api.deepseek.com/v1/chat/completions';
 
+const GROQ_API_KEY = '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'; // Replace with your actual GROQ API key
+const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 interface AIFormBuilderProps {
   onFormGenerated: (form: any) => void;
   onClose: () => void;
@@ -34,75 +36,145 @@ const AIFormBuilder: React.FC<AIFormBuilderProps> = ({ onFormGenerated, onClose 
     }
   };
 
-  const generateFormWithAI = async (prompt: string) => {
-    const systemPrompt = `You are a form builder AI. Generate a JSON form structure based on the user's description. 
+  // const generateFormWithAI = async (prompt: string) => {
+  //   const systemPrompt = `You are a form builder AI. Generate a JSON form structure based on the user's description. 
     
-    Return ONLY a valid JSON object with this structure:
-    {
-      "title": "Form Title",
-      "description": "Form description",
-      "fields": [
-        {
-          "type": "text|email|phone|textarea|select|radio|checkbox|date|file|rating",
-          "label": "Field Label",
-          "placeholder": "Placeholder text (optional)",
-          "required": true|false,
-          "options": ["option1", "option2"] // only for select, radio, checkbox
-        }
-      ]
-    }
+  //   Return ONLY a valid JSON object with this structure:
+  //   {
+  //     "title": "Form Title",
+  //     "description": "Form description",
+  //     "fields": [
+  //       {
+  //         "type": "text|email|phone|textarea|select|radio|checkbox|date|file|rating",
+  //         "label": "Field Label",
+  //         "placeholder": "Placeholder text (optional)",
+  //         "required": true|false,
+  //         "options": ["option1", "option2"] // only for select, radio, checkbox
+  //       }
+  //     ]
+  //   }
     
-    Available field types: text, email, phone, textarea, select, radio, checkbox, date, file, rating
-    Make the form practical and user-friendly based on the description.`;
+  //   Available field types: text, email, phone, textarea, select, radio, checkbox, date, file, rating
+  //   Make the form practical and user-friendly based on the description.`;
 
-    const response = await fetch(DEEPSEEK_API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${DEEPSEEK_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: 'deepseek-chat',
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: prompt }
-        ],
-        temperature: 0.7,
-        max_tokens: 2000,
-      }),
-    });
+  //   const response = await fetch(DEEPSEEK_API_URL, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Authorization': `Bearer ${DEEPSEEK_API_KEY}`,
+  //     },
+  //     body: JSON.stringify({
+  //       model: 'deepseek-chat',
+  //       messages: [
+  //         { role: 'system', content: systemPrompt },
+  //         { role: 'user', content: prompt }
+  //       ],
+  //       temperature: 0.7,
+  //       max_tokens: 2000,
+  //     }),
+  //   });
 
-    if (!response.ok) {
-      throw new Error(`API request failed: ${response.statusText}`);
-    }
+  //   if (!response.ok) {
+  //     throw new Error(`API request failed: ${response.statusText}`);
+  //   }
 
-    const data = await response.json();
-    const aiResponse = data.choices[0]?.message?.content;
+  //   const data = await response.json();
+  //   const aiResponse = data.choices[0]?.message?.content;
 
-    if (!aiResponse) {
-      throw new Error('No response from AI');
-    }
+  //   if (!aiResponse) {
+  //     throw new Error('No response from AI');
+  //   }
 
-    try {
-      // Extract JSON from the response (in case there's extra text)
-      const jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
-      const jsonString = jsonMatch ? jsonMatch[0] : aiResponse;
-      const formData = JSON.parse(jsonString);
+  //   try {
+  //     // Extract JSON from the response (in case there's extra text)
+  //     const jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
+  //     const jsonString = jsonMatch ? jsonMatch[0] : aiResponse;
+  //     const formData = JSON.parse(jsonString);
       
-      // Validate the structure
-      if (!formData.title || !formData.fields || !Array.isArray(formData.fields)) {
-        throw new Error('Invalid form structure from AI');
-      }
+  //     // Validate the structure
+  //     if (!formData.title || !formData.fields || !Array.isArray(formData.fields)) {
+  //       throw new Error('Invalid form structure from AI');
+  //     }
 
-      return {
-        ...formData,
-        status: 'draft'
-      };
-    } catch (parseError) {
-      console.error('Failed to parse AI response:', aiResponse);
-      throw new Error('Failed to parse AI response');
+  //     return {
+  //       ...formData,
+  //       status: 'draft'
+  //     };
+  //   } catch (parseError) {
+  //     console.error('Failed to parse AI response:', aiResponse);
+  //     throw new Error('Failed to parse AI response');
+  //   }
+  // };
+
+  const generateFormWithAI = async (prompt: string) => {
+  const systemPrompt = `You are a form builder AI. Generate a JSON form structure based on the user's description. 
+
+  Return ONLY a valid JSON object with this structure:
+  {
+    "title": "Form Title",
+    "description": "Form description",
+    "fields": [
+      {
+        "type": "text|email|phone|textarea|select|radio|checkbox|date|file|rating",
+        "label": "Field Label",
+        "placeholder": "Placeholder text (optional)",
+        "required": true|false,
+        "options": ["option1", "option2"] // only for select, radio, checkbox
+      }
+    ]
+  }
+
+  Available field types: text, email, phone, textarea, select, radio, checkbox, date, file, rating
+  Make the form practical and user-friendly based on the description.`;
+
+  const response = await fetch(GROQ_API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${GROQ_API_KEY}`,
+    },
+    body: JSON.stringify({
+      model: 'llama3-70b-8192',
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: prompt }
+      ],
+      temperature: 0.7,
+      max_tokens: 2000,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`API request failed: ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  const aiResponse = data.choices[0]?.message?.content;
+
+  if (!aiResponse) {
+    throw new Error('No response from AI');
+  }
+
+  try {
+    // Extract JSON from the response (in case there's extra text)
+    const jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
+    const jsonString = jsonMatch ? jsonMatch[0] : aiResponse;
+    const formData = JSON.parse(jsonString);
+    
+    // Validate the structure
+    if (!formData.title || !formData.fields || !Array.isArray(formData.fields)) {
+      throw new Error('Invalid form structure from AI');
     }
-  };
+
+    return {
+      ...formData,
+      status: 'draft'
+    };
+  } catch (parseError) {
+    console.error('Failed to parse AI response:', aiResponse);
+    throw new Error('Failed to parse AI response');
+  }
+};
 
   const generateFormFromPrompt = (prompt: string) => {
     // Simple AI simulation - in real implementation, this would call an AI API
@@ -352,7 +424,7 @@ const AIFormBuilder: React.FC<AIFormBuilderProps> = ({ onFormGenerated, onClose 
             <button
               onClick={generateForm}
               disabled={generating || !prompt.trim()}
-              className="flex-1 px-4 py-2 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-md hover:from-purple-600 hover:to-blue-600 transition-colors disabled:opacity-50 flex items-center justify-center"
+              className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
             >
               {generating ? (
                 <>

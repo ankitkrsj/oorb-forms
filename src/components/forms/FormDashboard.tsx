@@ -714,7 +714,7 @@ const FormDashboard: React.FC<FormDashboardProps> = ({
             
             <button
               onClick={() => setShowMyResponses(true)}
-              className="flex items-center space-x-2 px-3 sm:px-4 py-2 bg-purple-600 text-white rounded-sm hover:bg-purple-700 transition-colors text-sm"
+              className="flex items-center border border-black space-x-2 px-3 sm:px-4 py-2 bg-purple-600 text-black rounded-sm hover:bg-purple-700 transition-colors text-sm"
             >
               <User className="w-4 h-4" />
               <span className="hidden sm:inline">My Responses</span>

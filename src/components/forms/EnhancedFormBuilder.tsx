@@ -746,65 +746,68 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
               </span>
             </div>
             <div className="flex items-center space-x-1 md:space-x-2">
-              <button
-                onClick={() => setPreviewMode(true)}
-                className="flex items-center space-x-1 md:space-x-2 p-2 md:px-4 md:py-2 text-gray-600 hover:bg-gray-50 rounded-sm border border-gray-300"
-                title="Preview"
-              >
-                <Eye className="w-4 h-4" />
-                <span className="hidden md:inline">Preview</span>
-              </button>
-              <button
-                onClick={saveForm}
-                disabled={saving}
-                className="flex items-center space-x-1 md:space-x-2 p-2 md:px-4 md:py-2 bg-blue-600 text-white rounded-sm hover:bg-blue-700 disabled:opacity-50 shadow-lg"
-                title="Save"
-              >
-                <Save className="w-4 h-4" />
-                <span className="hidden md:inline">{saving ? 'Saving...' : 'Save'}</span>
-              </button>
-              <button
-                onClick={publishForm}
-                disabled={publishing || !form._id}
-                className="flex items-center space-x-1 md:space-x-2 p-2 md:px-4 md:py-2 bg-green-600 text-white rounded-sm hover:bg-green-700 disabled:opacity-50 shadow-lg"
-                title="Publish"
-              >
-                <Send className="w-4 h-4" />
-                <span className="hidden md:inline">{publishing ? 'Publishing...' : 'Publish'}</span>
-              </button>
-              {form.status === 'published' && form.shareUrl && (
-                <>
-                  <button
-                    onClick={copyShareLink}
-                    className="hidden md:flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-sm hover:bg-purple-700 shadow-lg"
-                  >
-                    <Share2 className="w-4 h-4" />
-                    <span>Share</span>
-                  </button>
-                  <button
-                    onClick={() => setShowEmbedCode(true)}
-                    className="hidden md:flex items-center space-x-2 px-4 py-2 bg-gray-600 text-white rounded-sm hover:bg-gray-700 shadow-lg"
-                  >
-                    <Code className="w-4 h-4" />
-                    <span>Embed</span>
-                  </button>
-                  <button
-                    onClick={() => setShowIntegrations(true)}
-                    className="hidden md:flex items-center space-x-2 px-4 py-2 bg-orange-600 text-white rounded-sm hover:bg-orange-700 shadow-lg"
-                  >
-                    <Zap className="w-4 h-4" />
-                    <span>Integrations</span>
-                  </button>
-                  <button
-                    onClick={() => setShowAnalytics(true)}
-                    className="hidden md:flex items-center space-x-2 px-4 py-2 bg-indigo-600 text-white rounded-sm hover:bg-indigo-700 shadow-lg"
-                  >
-                    <BarChart3 className="w-4 h-4" />
-                    <span>Analytics</span>
-                  </button>
-                </>
-              )}
-            </div>
+  <button
+    onClick={() => setPreviewMode(true)}
+    className="flex items-center space-x-1 md:space-x-2 px-3 md:px-4 py-2 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors duration-200"
+    title="Preview"
+  >
+    <Eye className="w-4 h-4" />
+    <span className="hidden md:inline">Preview</span>
+  </button>
+
+  <button
+    onClick={saveForm}
+    disabled={saving}
+    className="flex items-center space-x-1 md:space-x-2 px-3 md:px-4 py-2 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 disabled:opacity-50 transition-colors duration-200"
+    title="Save"
+  >
+    <Save className="w-4 h-4" />
+    <span className="hidden md:inline">{saving ? 'Saving...' : 'Save'}</span>
+  </button>
+
+  <button
+    onClick={publishForm}
+    disabled={publishing || !form._id}
+    className="flex items-center space-x-1 md:space-x-2 px-3 md:px-4 py-2 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 disabled:opacity-50 transition-colors duration-200"
+    title="Publish"
+  >
+    <Send className="w-4 h-4" />
+    <span className="hidden md:inline">{publishing ? 'Publishing...' : 'Publish'}</span>
+  </button>
+
+  {form.status === 'published' && form.shareUrl && (
+    <>
+      <button
+        onClick={copyShareLink}
+        className="hidden md:flex items-center space-x-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors duration-200"
+      >
+        <Share2 className="w-4 h-4" />
+        <span>Share</span>
+      </button>
+      <button
+        onClick={() => setShowEmbedCode(true)}
+        className="hidden md:flex items-center space-x-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors duration-200"
+      >
+        <Code className="w-4 h-4" />
+        <span>Embed</span>
+      </button>
+      <button
+        onClick={() => setShowIntegrations(true)}
+        className="hidden md:flex items-center space-x-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors duration-200"
+      >
+        <Zap className="w-4 h-4" />
+        <span>Integrations</span>
+      </button>
+      <button
+        onClick={() => setShowAnalytics(true)}
+        className="hidden md:flex items-center space-x-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors duration-200"
+      >
+        <BarChart3 className="w-4 h-4" />
+        <span>Analytics</span>
+      </button>
+    </>
+  )}
+</div>
           </div>
         </div>
 
