@@ -90,10 +90,10 @@ router.get('/form/:formId', authenticateToken, async (req, res) => {
     });
     
     // Verify user owns the form
-    const form = await Form.findOne({ 
+    const form = await Form.findOne({
       _id: req.params.formId, 
       createdBy: req.user._id 
-    });
+    }).populate('createdBy', 'name email');
     
     console.log('Responses route - Form query result:', form ? 'Found' : 'Not found');
     
@@ -118,6 +118,12 @@ router.get('/form/:formId', authenticateToken, async (req, res) => {
 
     res.json({
       responses,
+      form: {
+        _id: form._id,
+        title: form.title,
+        description: form.description,
+        fields: form.fields
+      },
       pagination: {
         current: parseInt(page),
         total: Math.ceil(total / limit),

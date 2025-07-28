@@ -75,6 +75,11 @@ const ResponseViewer: React.FC<ResponseViewerProps> = ({ formId, onBack }) => {
       if (response.data.responses) {
         setResponses(response.data.responses);
         setTotalPages(response.data.pagination?.total || 1);
+        
+        // Update form data if available in response
+        if (response.data.form && !form) {
+          setForm(response.data.form);
+        }
       } else if (Array.isArray(response.data)) {
         setResponses(response.data);
         setTotalPages(1);

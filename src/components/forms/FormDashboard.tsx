@@ -438,16 +438,9 @@ const FormDashboard: React.FC<FormDashboardProps> = ({
                 />
               </div>
             ) : (
-              <>
-                <div className="w-10 h-10 sm:w-14 sm:h-14 bg-blue-50 rounded-sm flex items-center justify-center">
-                  <FileText className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" />
-                </div>
-                {/* Status Dot */}
-                <div 
-                  className={`absolute -top-1 -left-8 w-3 h-3 rounded-full border-2 border-white ${getStatusDotColor((item as FormItem).status)}`}
-                  title={`Status: ${(item as FormItem).status}`}
-                />
-              </>
+              <div className="w-10 h-10 sm:w-14 sm:h-14 bg-blue-50 rounded-sm flex items-center justify-center">
+                <FileText className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" />
+              </div>
             )}
           </div>
 

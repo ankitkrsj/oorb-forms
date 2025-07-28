@@ -5,7 +5,7 @@ const fieldSchema = new mongoose.Schema({
   type: { 
     type: String, 
     required: true,
-    enum: ['text', 'email', 'phone', 'textarea', 'select', 'radio', 'checkbox', 'date', 'file', 'rating']
+    enum: ['text', 'email', 'phone', 'textarea', 'select', 'radio', 'checkbox', 'date', 'file', 'rating', 'question']
   },
   label: { type: String, required: true },
   placeholder: String,
@@ -15,7 +15,19 @@ const fieldSchema = new mongoose.Schema({
     minLength: Number,
     maxLength: Number,
     pattern: String
-  }
+  },
+  // Question/Answer specific fields
+  questionType: { 
+    type: String, 
+    enum: ['single-choice', 'multiple-choice'],
+    required: function() { return this.type === 'question'; }
+  },
+  questionText: String,
+  questionOptions: [{
+    id: String,
+    text: String,
+    isCorrect: { type: Boolean, default: false }
+  }]
 });
 
 const formSchema = new mongoose.Schema({
