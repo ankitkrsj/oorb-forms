@@ -4,8 +4,10 @@ import { useDashboard } from './DashboardContext';
 
 const Toolbar: React.FC<{ onCreateForm: () => void }> = ({ onCreateForm }) => {
   const {
-    filterStatus,
-    setFilterStatus,
+    showDrafts,
+    setShowDrafts,
+    showPublished,
+    setShowPublished,
     viewMode,
     setViewMode,
     setShowFolderModal
@@ -35,16 +37,29 @@ const Toolbar: React.FC<{ onCreateForm: () => void }> = ({ onCreateForm }) => {
         </div>
 
         <div className="flex items-center space-x-2 sm:space-x-4 w-full sm:w-auto">
-          <select
-            value={filterStatus}
-            onChange={(e) => setFilterStatus(e.target.value as any)}
-            className="flex-1 sm:flex-none px-3 py-2 text-sm border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
-          >
-            <option value="all">All Status</option>
-            <option value="published">Published</option>
-            <option value="draft">Draft</option>
-            <option value="closed">Closed</option>
-          </select>
+          <div className="flex items-center space-x-3 bg-white border border-gray-300 rounded-sm px-3 py-2">
+            <label className="flex items-center space-x-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={showDrafts}
+                onChange={(e) => setShowDrafts(e.target.checked)}
+                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              />
+              <span className="text-sm text-gray-700">Drafts</span>
+            </label>
+            
+            <div className="w-px h-4 bg-gray-300"></div>
+            
+            <label className="flex items-center space-x-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={showPublished}
+                onChange={(e) => setShowPublished(e.target.checked)}
+                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              />
+              <span className="text-sm text-gray-700">Published</span>
+            </label>
+          </div>
 
           <div className="flex items-center border border-gray-300 rounded-sm">
             <button

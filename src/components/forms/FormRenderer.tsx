@@ -6,6 +6,7 @@ import FormHeader from './FormHeader';
 import ResponseSavePrompt from './ResponseSavePrompt';
 import toast from 'react-hot-toast';
 import FileUploadField from './FileUploadField';
+import QuestionAnswerField from './QuestionAnswerField';
 
 interface FormField {
   id: string;
@@ -15,6 +16,13 @@ interface FormField {
   required: boolean;
   options?: string[];
   validation?: any;
+  questionType?: 'single-choice' | 'multiple-choice';
+  questionText?: string;
+  questionOptions?: Array<{
+    id: string;
+    text: string;
+    isCorrect: boolean;
+  }>;
 }
 
 interface Form {
@@ -390,6 +398,27 @@ const FormRenderer: React.FC = () => {
                 </span>
               )}
             </div>
+            {errors[field.id] && (
+              <div className="flex items-center space-x-1 mt-1 text-red-600 text-sm">
+                <AlertCircle className="w-4 h-4" />
+                <span>{errors[field.id]}</span>
+              </div>
+            )}
+          </div>
+        );
+      
+      case 'question':
+        return (
+          <div>
+            <QuestionAnswerField
+              field={field}
+              onFieldUpdate={() => {}}
+              isPreview={true}
+              onAnswerSelect={(questionId, selectedOptions) => {
+                handleInputChange(fieldId, selectedOptions);
+              }}
+              selectedAnswers={responses[fieldId] || []}
+            />
             {errors[field.id] && (
               <div className="flex items-center space-x-1 mt-1 text-red-600 text-sm">
                 <AlertCircle className="w-4 h-4" />

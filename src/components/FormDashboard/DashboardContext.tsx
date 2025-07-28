@@ -5,7 +5,8 @@ const DashboardContext = createContext<DashboardContextType | undefined>(undefin
 
 export const DashboardProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterStatus, setFilterStatus] = useState<'all' | 'published' | 'draft' | 'closed'>('all');
+  const [showDrafts, setShowDrafts] = useState(true);
+  const [showPublished, setShowPublished] = useState(true);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [selectedFolder, setSelectedFolder] = useState<FolderItem | null>(null);
@@ -15,7 +16,8 @@ export const DashboardProvider: React.FC<{children: React.ReactNode}> = ({ child
   return (
     <DashboardContext.Provider value={{
       searchTerm, setSearchTerm,
-      filterStatus, setFilterStatus,
+      showDrafts, setShowDrafts,
+      showPublished, setShowPublished,
       viewMode, setViewMode,
       activeDropdown, setActiveDropdown,
       selectedFolder, setSelectedFolder,

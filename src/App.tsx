@@ -1,16 +1,17 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { ClerkAuthProvider, useAuth } from './contexts/ClerkAuthContext';
+import { SignedIn, SignedOut } from '@clerk/clerk-react';
 import { Toaster } from 'react-hot-toast';
 
+import ClerkSignIn from './components/auth/ClerkSignIn';
+import ClerkSignUp from './components/auth/ClerkSignUp';
 
 import FormRenderer from './components/forms/FormRenderer';
-import LoginPage from './components/auth/LoginPage';
-import RegisterPage from './components/auth/RegisterPage';
 import EnhancedOorbFormsApp from './components/forms/EnhancedOorbFormsApp';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { user, loading } = useAuth();
+  const { user, loading, isSignedIn } = useAuth();
   
   
   if (loading) {
@@ -24,9 +25,9 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
     );
   }
   
-  if (!user) {
-    console.log('User not authenticated, redirecting to login');
-    return <Navigate to="/login" replace />;
+  if (!isSignedIn) {
+    console.log('User not authenticated, redirecting to sign-in');
+    return <Navigate to="/sign-in" replace />;
   }
   
   console.log('User authenticated, rendering protected content');
@@ -34,7 +35,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 };
 
 const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { user, loading } = useAuth();
+  const { user, loading, isSignedIn } = useAuth();
   
   if (loading) {
     return (
@@ -47,7 +48,7 @@ const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     );
   }
   
-  if (user) {
+  if (isSignedIn) {
     console.log('User already authenticated, redirecting to dashboard');
     return <Navigate to="/oorb-forms" replace />;
   }
@@ -60,14 +61,14 @@ const AppRoutes: React.FC = () => {
     <div className="min-h-screen bg-white">
       <Routes>
         {/* Public routes */}
-        <Route path="/login" element={
+        <Route path="/sign-in" element={
           <PublicRoute>
-            <LoginPage />
+            <ClerkSignIn />
           </PublicRoute>
         } />
-        <Route path="/register" element={
+        <Route path="/sign-up" element={
           <PublicRoute>
-            <RegisterPage />
+            <ClerkSignUp />
           </PublicRoute>
         } />
         <Route path="/form/:shareUrl" element={<FormRenderer />} />
@@ -113,9 +114,9 @@ const AppRoutes: React.FC = () => {
 
 const App = () => {
   return (
-    <AuthProvider>
+    <ClerkAuthProvider>
       <AppRoutes />
-    </AuthProvider>
+    </ClerkAuthProvider>
   );
 };
 

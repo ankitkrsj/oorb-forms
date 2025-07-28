@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Download, Trash2, Calendar, Clock, User, Menu, X, FileText, BarChart3 } from 'lucide-react';
+import { ArrowLeft, Download, Trash2, Calendar, Clock, User, Menu, X, FileText, BarChart3, Award } from 'lucide-react';
 import { responseAPI, exportAPI, formAPI } from '../../services/api';
 import toast from 'react-hot-toast';
+import TestResultsViewer from './TestResultsViewer';
 
 interface Response {
   _id: string;
@@ -38,6 +39,7 @@ const ResponseViewer: React.FC<ResponseViewerProps> = ({ formId, onBack }) => {
   const [totalPages, setTotalPages] = useState(1);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [selectedResponse, setSelectedResponse] = useState<Response | null>(null);
+  const [showTestResults, setShowTestResults] = useState<Response | null>(null);
 
   useEffect(() => {
     loadForm();
@@ -121,9 +123,37 @@ const ResponseViewer: React.FC<ResponseViewerProps> = ({ formId, onBack }) => {
     if (fieldType === 'rating') {
       return `${value}/5 stars`;
     }
+    if (fieldType === 'question') {
+      return Array.isArray(value) ? `${value.length} option(s) selected` : 'No answer';
+    }
     return value?.toString() || 'No answer';
   };
 
+  const hasQuestions = form?.fields?.some((field: any) => field.type === 'question');
+
+  const calculateTestScore = (response: Response) => {
+    if (!form || !hasQuestions) return null;
+    
+    const questionFields = form.fields.filter((field: any) => field.type === 'question');
+    let correctCount = 0;
+    
+    questionFields.forEach((field: any) => {
+      const responseField = response.responses.find(r => r.fieldId === field.id);
+      const userAnswers = responseField?.value || [];
+      const correctAnswers = (field.questionOptions || [])
+        .filter((option: any) => option.isCorrect)
+        .map((option: any) => option.id);
+      
+      const isCorrect = 
+        Array.isArray(userAnswers) &&
+        userAnswers.length === correctAnswers.length &&
+        userAnswers.every((answer: string) => correctAnswers.includes(answer));
+      
+      if (isCorrect) correctCount++;
+    });
+    
+    return questionFields.length > 0 ? (correctCount / questionFields.length) * 100 : 0;
+  };
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
@@ -292,6 +322,15 @@ const ResponseViewer: React.FC<ResponseViewerProps> = ({ formId, onBack }) => {
                     >
                       View Details
                     </button>
+                    {hasQuestions && (
+                      <button
+                        onClick={() => setShowTestResults(response)}
+                        className="px-3 py-1 text-purple-600 hover:bg-purple-50 rounded-sm text-sm transition-colors"
+                      >
+                        <Award className="w-4 h-4 inline mr-1" />
+                        Test Results
+                      </button>
+                    )}
                     <button
                       onClick={() => deleteResponse(response._id)}
                       className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-sm self-end sm:self-auto transition-colors"
@@ -303,6 +342,17 @@ const ResponseViewer: React.FC<ResponseViewerProps> = ({ formId, onBack }) => {
                 </div>
                 
                 <div className="grid gap-3 sm:gap-4">
+                  {hasQuestions && (
+                    <div className="bg-purple-50 border border-purple-200 rounded-md p-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-medium text-purple-900">Test Score</span>
+                        <span className="text-lg font-bold text-purple-600">
+                          {Math.round(calculateTestScore(response) || 0)}%
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                  
                   {response.responses.slice(0, 3).map((fieldResponse, fieldIndex) => (
                     <div key={fieldIndex} className="border-l-4 border-blue-500 pl-3 sm:pl-4 bg-blue-50 rounded-r-lg p-2">
                       <h4 className="font-medium text-gray-900 mb-1 text-sm sm:text-base">
@@ -394,6 +444,16 @@ const ResponseViewer: React.FC<ResponseViewerProps> = ({ formId, onBack }) => {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Test Results Modal */}
+      {showTestResults && form && (
+        <TestResultsViewer
+          formId={formId}
+          responses={showTestResults.responses}
+          form={form}
+          onClose={() => setShowTestResults(null)}
+        />
       )}
     </div>
   );

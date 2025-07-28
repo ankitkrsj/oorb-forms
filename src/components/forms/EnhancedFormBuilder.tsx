@@ -26,7 +26,8 @@ import {
   GitBranch,
   Menu,
   X,
-  AlertCircle
+  AlertCircle,
+  HelpCircle
 } from 'lucide-react';
 import { formAPI } from '../../services/api';
 import toast from 'react-hot-toast';
@@ -37,15 +38,23 @@ import IntegrationsPanel from './IntegrationsPanel';
 import ConditionalLogic from './ConditionalLogic';
 import AdvancedValidation from './AdvancedValidation';
 import FormAnalytics from './FormAnalytics';
+import QuestionAnswerField from './QuestionAnswerField';
 
 interface FormField {
   id: string;
-  type: 'text' | 'email' | 'phone' | 'textarea' | 'select' | 'radio' | 'checkbox' | 'date' | 'file' | 'rating';
+  type: 'text' | 'email' | 'phone' | 'textarea' | 'select' | 'radio' | 'checkbox' | 'date' | 'file' | 'rating' | 'question';
   label: string;
   placeholder?: string;
   required: boolean;
   options?: string[];
   validation?: any;
+  questionType?: 'single-choice' | 'multiple-choice';
+  questionText?: string;
+  questionOptions?: Array<{
+    id: string;
+    text: string;
+    isCorrect: boolean;
+  }>;
 }
 
 interface Form {
@@ -123,7 +132,8 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
     { type: 'checkbox', label: 'Checkboxes', icon: CheckSquare },
     { type: 'date', label: 'Date', icon: Calendar },
     { type: 'file', label: 'File Upload', icon: Upload },
-    { type: 'rating', label: 'Rating', icon: Star }
+    { type: 'rating', label: 'Rating', icon: Star },
+    { type: 'question', label: 'Question/Answer', icon: HelpCircle }
   ];
 
   // Load form if editing
@@ -389,6 +399,15 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
           </div>
         );
 
+      case 'question':
+        return (
+          <QuestionAnswerField
+            field={field}
+            onFieldUpdate={() => {}}
+            isPreview={true}
+          />
+        );
+
       default:
         return null;
     }
@@ -497,6 +516,13 @@ const EnhancedFormBuilder: React.FC<EnhancedFormBuilderProps> = ({ formId, onBac
             field={field}
             onValidationChange={(validation) => updateField(field.id, { validation })}
           />
+
+          {field.type === 'question' && (
+            <QuestionAnswerField
+              field={field}
+              onFieldUpdate={(updates) => updateField(field.id, updates)}
+            />
+          )}
 
           <button
             onClick={() => deleteField(field.id)}

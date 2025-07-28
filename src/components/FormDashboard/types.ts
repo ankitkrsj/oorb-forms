@@ -27,14 +27,16 @@ export interface FormDashboardProps {
 
 export interface DashboardContextType {
   searchTerm: string;
-  filterStatus: 'all' | 'published' | 'draft' | 'closed';
+  showDrafts: boolean;
+  showPublished: boolean;
   viewMode: 'grid' | 'list';
   activeDropdown: string | null;
   selectedFolder: FolderItem | null;
   showFolderModal: boolean;
   openFolderModal: FolderItem | null;
   setSearchTerm: (term: string) => void;
-  setFilterStatus: (status: 'all' | 'published' | 'draft' | 'closed') => void;
+  setShowDrafts: (show: boolean) => void;
+  setShowPublished: (show: boolean) => void;
   setViewMode: (mode: 'grid' | 'list') => void;
   setActiveDropdown: (id: string | null) => void;
   setSelectedFolder: (folder: FolderItem | null) => void;

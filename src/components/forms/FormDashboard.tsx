@@ -51,7 +51,8 @@ const FormDashboard: React.FC<FormDashboardProps> = ({
 }) => {
   const { user, logout, getInitials } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterStatus, setFilterStatus] = useState<'all' | 'published' | 'draft' | 'closed'>('all');
+  const [showDrafts, setShowDrafts] = useState(true);
+  const [showPublished, setShowPublished] = useState(true);
   const [forms, setForms] = useState<FormItem[]>([]);
   const [folders, setFolders] = useState<FolderItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -258,10 +259,12 @@ const FormDashboard: React.FC<FormDashboardProps> = ({
     standaloneForms.filter(form => {
       const matchesSearch = form.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           form.description.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesFilter = filterStatus === 'all' || form.status === filterStatus;
+      const matchesFilter = (showDrafts && form.status === 'draft') || 
+                           (showPublished && form.status === 'published') ||
+                           (form.status === 'closed');
       return matchesSearch && matchesFilter;
     }), 
-    [standaloneForms, searchTerm, filterStatus]
+    [standaloneForms, searchTerm, showDrafts, showPublished]
   );
 
   const filteredFolders = useMemo(() => 
@@ -276,10 +279,12 @@ const FormDashboard: React.FC<FormDashboardProps> = ({
     forms.filter(form => form.folderId === folderId).filter(form => {
       const matchesSearch = form.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           form.description.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesFilter = filterStatus === 'all' || form.status === filterStatus;
+      const matchesFilter = (showDrafts && form.status === 'draft') || 
+                           (showPublished && form.status === 'published') ||
+                           (form.status === 'closed');
       return matchesSearch && matchesFilter;
     }), 
-    [forms, searchTerm, filterStatus]
+    [forms, searchTerm, showDrafts, showPublished]
   );
 
   // Stats calculations
@@ -723,16 +728,29 @@ const FormDashboard: React.FC<FormDashboardProps> = ({
           </div>
 
           <div className="flex items-center space-x-2 sm:space-x-4 w-full sm:w-auto">
-            <select
-              value={filterStatus}
-              onChange={(e) => setFilterStatus(e.target.value as any)}
-              className="flex-1 sm:flex-none px-3 py-2 text-sm border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
-            >
-              <option value="all">All Status</option>
-              <option value="published">Published</option>
-              <option value="draft">Draft</option>
-              <option value="closed">Closed</option>
-            </select>
+            <div className="flex items-center space-x-3 bg-white border border-gray-300 rounded-sm px-3 py-2">
+              <label className="flex items-center space-x-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={showDrafts}
+                  onChange={(e) => setShowDrafts(e.target.checked)}
+                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                />
+                <span className="text-sm text-gray-700">Drafts</span>
+              </label>
+              
+              <div className="w-px h-4 bg-gray-300"></div>
+              
+              <label className="flex items-center space-x-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={showPublished}
+                  onChange={(e) => setShowPublished(e.target.checked)}
+                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                />
+                <span className="text-sm text-gray-700">Published</span>
+              </label>
+            </div>
 
             <div className="flex items-center border border-gray-300 rounded-sm">
               <button
@@ -875,7 +893,7 @@ const FormDashboard: React.FC<FormDashboardProps> = ({
                 : 'Get started by creating your first form'
               }
             </p>
-            {!searchTerm && filterStatus === 'all' && forms.length === 0 && (
+           {!searchTerm && forms.length === 0 && (
               <button
                 onClick={onCreateForm}
                 className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-blue-600 text-white font-medium rounded-sm hover:bg-blue-700 transition-colors"

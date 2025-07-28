@@ -29,7 +29,7 @@ const ListView: React.FC<ListViewProps> = ({
   setSelectedFolder,
   setShowFolderModal,
 }) => {
-  const { activeDropdown, setActiveDropdown } = useDashboard();
+  const { activeDropdown, setActiveDropdown, filterStatus } = useDashboard();
 
   const getStatusDotColor = (status: string) => {
     switch (status) {
