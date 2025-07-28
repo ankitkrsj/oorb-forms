@@ -893,7 +893,7 @@ const FormDashboard: React.FC<FormDashboardProps> = ({
                 : 'Get started by creating your first form'
               }
             </p>
-           {!searchTerm && forms.length === 0 && (
+           {!searchTerm && (!showDrafts && !showPublished) && forms.length === 0 && (
               <button
                 onClick={onCreateForm}
                 className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-blue-600 text-white font-medium rounded-sm hover:bg-blue-700 transition-colors"

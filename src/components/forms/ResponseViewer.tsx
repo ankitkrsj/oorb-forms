@@ -24,6 +24,16 @@ interface Form {
   _id: string;
   title: string;
   description: string;
+  fields: Array<{
+    id: string;
+    type: string;
+    label: string;
+    questionOptions?: Array<{
+      id: string;
+      text: string;
+      isCorrect: boolean;
+    }>;
+  }>;
 }
 
 interface ResponseViewerProps {

@@ -415,9 +415,9 @@ const FormRenderer: React.FC = () => {
               onFieldUpdate={() => {}}
               isPreview={true}
               onAnswerSelect={(questionId, selectedOptions) => {
-                handleInputChange(fieldId, selectedOptions);
+                handleInputChange(field.id, selectedOptions);
               }}
-              selectedAnswers={responses[fieldId] || []}
+              selectedAnswers={responses[field.id] || []}
             />
             {errors[field.id] && (
               <div className="flex items-center space-x-1 mt-1 text-red-600 text-sm">

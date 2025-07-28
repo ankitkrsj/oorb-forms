@@ -201,15 +201,9 @@ const FileItem: React.FC<FileItemProps> = ({
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    onDelete?.(formItem._id);
                     setActiveDropdown(null);
                   }}
                   className="w-full flex items-center space-x-3 px-4 py-2 text-left text-red-600 hover:bg-red-50 transition-colors"
-                >
-                  <Trash2 className="w-4 h-4" />
-                  <span>Delete Form</span>
-                </button>
-              </>
             )}
           </div>
         )}
