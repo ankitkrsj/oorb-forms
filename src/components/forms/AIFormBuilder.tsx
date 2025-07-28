@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 // const DEEPSEEK_API_KEY = 'sk-your-deepseek-api-key'; // Replace with your actual API key
 // const DEEPSEEK_API_URL = 'https://api.deepseek.com/v1/chat/completions';
 
-const GROQ_API_KEY = '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'; // Replace with your actual GROQ API key
+const GROQ_API_KEY = ''; // Replace with your actual GROQ API key
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 interface AIFormBuilderProps {
   onFormGenerated: (form: any) => void;
